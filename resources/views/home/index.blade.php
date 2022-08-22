@@ -77,9 +77,8 @@ html,body{
                     });
                     return false;
                 }
+                window.location = "{{route('lobby.index')}}";
             },
-            
-            window.location = "{{route('lobby.index')}}";
 
             error: function(respuesta){
                 console.log(respuesta['responseText']);
