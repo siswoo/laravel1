@@ -28,9 +28,12 @@ class LoginController extends Controller
             return json_encode($datos);
         }
         $user = Auth::getProvider()->retrieveByCredentials($credentials);
-        return 'ok';
         Auth::login($user);
-        return $this->authenticated($request,$user);
+        //return $this->authenticated($request,$user);
+        $datos = [
+            "estatus"   => "ok",
+        ];
+        return json_encode($datos);
     }
 
     public function authenticated(Request $request, $user){
