@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Session;
 class LogoutController extends Controller
 {
     public function logout(){
+        $token = auth()->user()->token();
+        $token->revoke();
         Session::flush();
         Auth::logout();
         return redirect()->route('home.index');

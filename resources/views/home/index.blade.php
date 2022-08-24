@@ -68,6 +68,7 @@ html,body{
             beforeSend: function(){},
             
             success: function(respuesta){
+                console.log(respuesta);
                 if(respuesta["estatus"]=="error"){
                 	Swal.fire({
                         title: 'Error',

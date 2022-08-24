@@ -19,6 +19,19 @@ use App\Http\Controllers\LogoutController;
 */
 
 Route::get('/',[HomeController::class,'index'])->name('home.index');
+
+Route::post('login', [LoginController::class,'login'])->name('login.login');
+Route::get('register', function (){
+    return view('auth.register');
+});
+Route::post('register',[RegisterController::class,'store'])->name('register.store');
+
+Route::group(['middleware' => 'CheckToken'], function () {
+    Route::get('usuarios', [UserController::class,'listado']);
+    Route::get('logout',[LogoutController::class,'logout'])->name('logout.logout');
+    Route::get('lobby',[LobbyController::class,'index'])->name('lobby.index');
+});
+/*
 Route::post('/login',[LoginController::class,'login'])->name('login.login');
 Route::get('/lobby',[LobbyController::class,'index'])->name('lobby.index');
 Route::get('/logout',[LogoutController::class,'logout'])->name('logout.logout');
@@ -27,6 +40,7 @@ Route::get('prueba1',function(){
     return view('prueba1');
 });
 
+*/
 /*
 Route::get('/', function () {
     return view('welcome');

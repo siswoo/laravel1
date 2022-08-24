@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Passport\Token;
 
 class LoginController extends Controller
 {
@@ -19,21 +20,23 @@ class LoginController extends Controller
     public function login(LoginRequest $request){
         $credentials = $request->getCredentials();
         if(!Auth::validate($credentials)){
-            //return redirect()->to('/')->withErrors('auth.failed'); //No me funciono
-            //return redirect()->to('/')->with('error','Credenciales Incorrectas');
             $datos = [
                 "estatus"   => "error",
                 "msg"   => "Credenciales Incorrectas",
             ];
             return json_encode($datos);
+        }else{
+            $user = Auth::getProvider()->retrieveByCredentials($credentials);
+            Auth::login($user);
+            Token::where('user_id','=',$user->id)->delete();
+            $token = Auth::User()->createToken('Token')->accessToken;
+            //
+            $datos = [
+                "estatus"   => "ok",
+                "token" => $token,
+            ];
+            return json_encode($datos);
         }
-        $user = Auth::getProvider()->retrieveByCredentials($credentials);
-        Auth::login($user);
-        //return $this->authenticated($request,$user);
-        $datos = [
-            "estatus"   => "ok",
-        ];
-        return json_encode($datos);
     }
 
     public function authenticated(Request $request, $user){
