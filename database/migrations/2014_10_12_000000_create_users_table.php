@@ -35,6 +35,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->text('avatar')->nullable();
             $table->integer('estatus')->default(1);
+            $table->text('Token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LobbyController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,39 +27,14 @@ Route::get('register', function (){
 });
 Route::post('register',[RegisterController::class,'store'])->name('register.store');
 
+Route::get('doublelogin', function(){
+    return view('home.doublelogin');
+})->name('login.doublelogin');
+
+Route::get('logout2',[LogoutController::class,'logout2'])->name('logout.logout2');
+
 Route::group(['middleware' => 'CheckToken'], function () {
     Route::get('usuarios', [UserController::class,'listado']);
     Route::get('logout',[LogoutController::class,'logout'])->name('logout.logout');
     Route::get('lobby',[LobbyController::class,'index'])->name('lobby.index');
 });
-/*
-Route::post('/login',[LoginController::class,'login'])->name('login.login');
-Route::get('/lobby',[LobbyController::class,'index'])->name('lobby.index');
-Route::get('/logout',[LogoutController::class,'logout'])->name('logout.logout');
-
-Route::get('prueba1',function(){
-    return view('prueba1');
-});
-
-*/
-/*
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/register', function (){
-    return view('auth.register');
-});
-
-Route::post('/register',[RegisterController::class,'store'])->name('register.store');
-
-Route::get('/login', function(){
-    return view('auth.login');
-});
-
-Route::post('/login',[LoginController::class,'login'])->name('login.login');
-
-Route::get('/home',[HomeController::class,'index'])->name('home.index');
-
-Route::get('/logout',[LogoutController::class,'logout'])->name('logout.logout');
-*/

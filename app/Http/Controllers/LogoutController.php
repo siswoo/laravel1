@@ -15,4 +15,10 @@ class LogoutController extends Controller
         Auth::logout();
         return redirect()->route('home.index');
     }
+
+    public function logout2(){
+        Session::flush();
+        Auth::logout();
+        return redirect()->route('home.index');
+    }
 }
