@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('usuario');
             $table->string('password');
             $table->string('email')->unique();
-            $table->integer('rol1');
+            $table->integer('rol1')->nullable();
             $table->integer('rol2')->nullable();
             $table->integer('rol3')->nullable();
             $table->integer('rol4')->nullable();

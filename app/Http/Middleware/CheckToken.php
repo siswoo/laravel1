@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Laravel\Passport\Token;
@@ -28,6 +29,8 @@ class CheckToken
 
         $usuario = auth()->user();
         $fecha_actual = date('Y-m-d H:i:s');
+        $pase1 = 0;
+        $pase2 = 0;
 
         $data = $request->session()->all();
         
@@ -37,8 +40,18 @@ class CheckToken
 
         $proceso1 = Token::where('user_id','=',$usuario->id)->where('expires_at','>',$fecha_actual)->where('revoked','=',0)->get();
         $contador1 = count($proceso1);
+
+        $proceso2 = User::find($usuario->id);
+        if($proceso2->rol1 == 1 or $proceso2->rol2 == 1 or $proceso2->rol3 == 1 or $proceso2->rol4 == 1 or $proceso2->rol5 == 1 or $proceso2->rol6 == 1 or $proceso2->rol7 == 1 or $proceso2->rol8 == 1 or $proceso2->rol9 == 1 or $proceso2->rol10 == 1){
+            $pase2 = 1;
+        }
+
         //dd($contador1);
         if($contador1>=1){
+            $pase1 = 1;
+        }
+        
+        if($pase1==1 and $pase2==1){
             return $next($request);
         }else{
             //return response()->json('Your account is inactive');

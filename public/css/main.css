@@ -87,7 +87,8 @@ body, html{
 .dashboard-sideBar-ct{
 	position: relative;
 	height: 100%;
-	background-color: rgba(0, 0, 0, .77);
+	/*background-color: rgba(0, 0, 0, .77);*/
+	background-color: black;
 	padding: 0 10px;
 	padding-bottom: 30px;
 }

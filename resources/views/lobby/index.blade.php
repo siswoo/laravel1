@@ -9,16 +9,18 @@
                     <a href="#!" class="btn-menu-dashboard"><i class="zmdi zmdi-more-vert"></i></a>
                 </li>
                 <li>
+                <!--
                     <a href="#!" class="btn-modal-help">
                         <i class="zmdi zmdi-help-outline"></i>
                     </a>
                 </li>
+                -->
             </ul>
         </nav>
 
         <div class="container-fluid">
             <div class="page-header">
-            <h1 class="text-titles">Sistema <small>Inicio</small></h1>
+            <h1 class="text-titles">Sistema <small>Versión 2</small></h1>
             </div>
         </div>
 
@@ -73,5 +75,25 @@
             </article>
         </div>
     </section>
+
+    <script>
+        function cerrarSession1(id){
+            Swal.fire({
+            title: '¿Estas seguro?',
+            text: "Esto Cerrará tus cuentas Activas",
+            icon: 'warning',
+            showConfirmButton: true,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, Deseo Cerrar mi Acceso',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if(result.value){
+                window.location = "{{route('logout.logout')}}";
+              }
+        });
+        }
+    </script>
 
 @endsection

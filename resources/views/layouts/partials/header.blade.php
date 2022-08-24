@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/bootstrap-material-design.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/ripples.min.css')}}">
-    <link rel="stylesheet" href="{{asset('css/sweetalert2.css')}}">
+    <!--<link rel="stylesheet" href="{{asset('css/sweetalert2.css')}}">-->
     <link rel="stylesheet" href="{{asset('css/jquery.mCustomScrollbar.css')}}">
     <link rel="stylesheet" href="{{asset('css/material-design-iconic-font.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/main.css')}}">
