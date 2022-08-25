@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LobbyController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RolesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,4 +38,8 @@ Route::group(['middleware' => 'CheckToken'], function () {
     Route::get('usuarios', [UserController::class,'listado']);
     Route::get('logout',[LogoutController::class,'logout'])->name('logout.logout');
     Route::get('lobby',[LobbyController::class,'index'])->name('lobby.index');
+    
+    Route::get('roles',[RolesController::class,'index'])->name('roles.index');
+    Route::get('usuarios', [UserController::class,'index'])->name('usuarios.index');
+    Route::get('modulos', [UserController::class,'index'])->name('modulos.index');
 });

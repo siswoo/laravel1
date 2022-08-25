@@ -37,7 +37,7 @@ html,body{
                     <input type="password" name="password" id="password" class="form-control" autocomplete="off">
                 </div>
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12 text-center mt-3">
-                    <button type="submit" class="btn btn-success" style="font-weight: bold; font-size: 20px;">INGRESAR</button>
+                    <button type="submit" class="btn btn-success" style="font-weight: bold; font-size: 20px;" id="submit1">INGRESAR</button>
                 </div>
             </div>
         </form>
@@ -65,10 +65,13 @@ html,body{
                 '_token': _token,
             },
 
-            beforeSend: function(){},
+            beforeSend: function(){
+                $('#submit1').prop('disabled', true);
+            },
             
             success: function(respuesta){
                 console.log(respuesta);
+                $('#submit1').prop('disabled', false);
                 if(respuesta["estatus"]=="error"){
                 	Swal.fire({
                         title: 'Error',
@@ -82,6 +85,7 @@ html,body{
             },
 
             error: function(respuesta){
+                $('#submit1').prop('disabled', false);
                 console.log(respuesta['responseText']);
             }
         });

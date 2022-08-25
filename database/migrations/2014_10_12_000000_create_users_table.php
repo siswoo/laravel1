@@ -22,16 +22,6 @@ return new class extends Migration
             $table->string('usuario');
             $table->string('password');
             $table->string('email')->unique();
-            $table->integer('rol1')->nullable();
-            $table->integer('rol2')->nullable();
-            $table->integer('rol3')->nullable();
-            $table->integer('rol4')->nullable();
-            $table->integer('rol5')->nullable();
-            $table->integer('rol6')->nullable();
-            $table->integer('rol7')->nullable();
-            $table->integer('rol8')->nullable();
-            $table->integer('rol9')->nullable();
-            $table->integer('rol10')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->text('avatar')->nullable();
             $table->integer('estatus')->default(1);

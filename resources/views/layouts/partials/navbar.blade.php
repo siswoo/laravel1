@@ -28,11 +28,11 @@
                     <i class="zmdi zmdi-view-dashboard zmdi-hc-fw"></i> Inicio
                 </a>
             </li>
-            <li>
-                <a href="#!" class="btn-sideBar-SubMenu">
-                    <i class="zmdi zmdi-case zmdi-hc-fw"></i> Administrador <i class="zmdi zmdi-caret-down pull-right"></i>
-                </a>
-                {{ dd($usuarios->id); }}
+
+            @if ($contador1>=1)
+                {!! $html1 !!}
+            @endif
+
                 <!--
                 <ul class="list-unstyled full-box">
                     <li>
@@ -52,7 +52,7 @@
                     </li>
                 </ul>
                 -->
-            </li>
+
         </ul>
     </div>
 </section>

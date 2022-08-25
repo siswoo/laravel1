@@ -29,7 +29,7 @@ class UserFactory extends Factory
             'usuario' => $this->faker->unique()->userName(),
             'email' => $this->faker->unique()->safeEmail(),
             'password' => $this->faker->password(),
-            'rol1' => 1,
+            //'rol1' => 1,
             //'avatar'=> $this->faker->text($maxNbChars = 200),
             'avatar' => $this->faker->imageUrl($width = 640, $height = 480),
             'estatus' => 1,

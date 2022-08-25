@@ -24,7 +24,6 @@ class User extends Authenticatable
         'documento_tipo',
         'documento_numero',
         'usuario',
-        'rol1',
         'email',
         'password',
     ];

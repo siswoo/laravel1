@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\User;
+use App\Models\UsersRoles;
 use Closure;
 use Illuminate\Http\Request;
 use Laravel\Passport\Token;
@@ -41,12 +42,13 @@ class CheckToken
         $proceso1 = Token::where('user_id','=',$usuario->id)->where('expires_at','>',$fecha_actual)->where('revoked','=',0)->get();
         $contador1 = count($proceso1);
 
-        $proceso2 = User::find($usuario->id);
-        if($proceso2->rol1 == 1 or $proceso2->rol2 == 1 or $proceso2->rol3 == 1 or $proceso2->rol4 == 1 or $proceso2->rol5 == 1 or $proceso2->rol6 == 1 or $proceso2->rol7 == 1 or $proceso2->rol8 == 1 or $proceso2->rol9 == 1 or $proceso2->rol10 == 1){
+        $proceso2 = UsersRoles::join("roles","users_roles.id_roles","=","roles.id")->join("users","users.id","=","users_roles.id_users")->where('users.id','=',$usuario->id)->get();
+        $contador2 = count($proceso2);
+        
+        if($contador2>=1){
             $pase2 = 1;
         }
 
-        //dd($contador1);
         if($contador1>=1){
             $pase1 = 1;
         }

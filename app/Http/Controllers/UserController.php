@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function index(){
+        $usuarios = User::all();
+        return $usuarios;
+    }
+    
     public function listado(){
         $usuarios = User::all();
         return $usuarios;
