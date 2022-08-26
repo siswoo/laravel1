@@ -4,23 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LobbyRequest;
 use App\Models\Modulos;
-use App\Models\Roles;
 use App\Models\User;
 use App\Models\UsersRoles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Passport\Passport;
-use Laravel\Passport\Token;
 
 class LobbyController extends Controller
 {
-    public function index(LobbyRequest $request){
+
+    protected function getData(){
         $id = Auth::user()->id;
         $usuarios = User::find($id);
         $html1 = '';
         $proceso1 = UsersRoles::join("roles","users_roles.id_roles","=","roles.id")->where('users_roles.id_users','=',$usuarios->id)->where('roles.estatus','=',1)->get();
-        //$proceso1 = UsersRoles::select("roles.nombre as roles_nombre","modulos.nombre as modulos_nombre")->join("roles","users_roles.id_roles","=","roles.id")->join("modulos","modulos.id_roles","=","roles.id")->where('users_roles.id_users','=',$usuarios->id)->where('roles.estatus','=',1)->where('modulos.estatus','=',1)->get();
-        //$proceso2 = Modulos::where();
         $contador1 = count($proceso1);
         if($contador1>=1){
             foreach($proceso1 as $item){
@@ -50,6 +46,19 @@ class LobbyController extends Controller
                 ';
             }
         }
+        $array[0] = $usuarios;
+        $array[1] = $proceso1;
+        $array[2] = $contador1;
+        $array[3] = $html1;
+        return $array;
+    }
+
+    public function index(LobbyRequest $request){
+        $array = $this->getData();
+        $usuarios = $array[0];
+        $proceso1 = $array[1];
+        $contador1 = $array[2];
+        $html1 = $array[3];
         return view('lobby.index',compact('usuarios','proceso1','contador1','html1'));
     }
 }

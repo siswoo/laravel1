@@ -28,31 +28,9 @@
                     <i class="zmdi zmdi-view-dashboard zmdi-hc-fw"></i> Inicio
                 </a>
             </li>
-
             @if ($contador1>=1)
                 {!! $html1 !!}
             @endif
-
-                <!--
-                <ul class="list-unstyled full-box">
-                    <li>
-                        <a href="#"><i class="zmdi zmdi-timer zmdi-hc-fw"></i> Usuarios</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="zmdi zmdi-book zmdi-hc-fw"></i> Roles</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="zmdi zmdi-graduation-cap zmdi-hc-fw"></i> Módulos</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="zmdi zmdi-font zmdi-hc-fw"></i> Modelos</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="zmdi zmdi-font zmdi-hc-fw"></i> Pasantes</a>
-                    </li>
-                </ul>
-                -->
-
         </ul>
     </div>
 </section>

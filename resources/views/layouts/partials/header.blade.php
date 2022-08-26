@@ -7,7 +7,7 @@
     <link rel="icon" href="{{ asset('img/favicon1.webp') }}">
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{asset('css/bootstrap-material-design.min.css')}}">
+    <!--<link rel="stylesheet" href="{{asset('css/bootstrap-material-design.min.css')}}"-->
     <link rel="stylesheet" href="{{asset('css/ripples.min.css')}}">
     <!--<link rel="stylesheet" href="{{asset('css/sweetalert2.css')}}">-->
     <link rel="stylesheet" href="{{asset('css/jquery.mCustomScrollbar.css')}}">

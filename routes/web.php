@@ -39,7 +39,12 @@ Route::group(['middleware' => 'CheckToken'], function () {
     Route::get('logout',[LogoutController::class,'logout'])->name('logout.logout');
     Route::get('lobby',[LobbyController::class,'index'])->name('lobby.index');
     
-    Route::get('roles',[RolesController::class,'index'])->name('roles.index');
-    Route::get('usuarios', [UserController::class,'index'])->name('usuarios.index');
-    Route::get('modulos', [UserController::class,'index'])->name('modulos.index');
+    Route::get('usuarios_admin', [UserController::class,'index'])->name('usuarios.index');
+    Route::get('modulos_admin', [UserController::class,'index'])->name('modulos.index');
+    Route::get('roles_create',[RolesController::class,'create'])->name('roles.create');
+    Route::post('roles_store',[RolesController::class,'store'])->name('roles.store');
+    Route::get('roles/{id}',[RolesController::class,'show']);
+    Route::put('roles',[RolesController::class,'update'])->name('roles.update');
 });
+
+Route::get('roles_admin',[RolesController::class,'index'])->name('roles.index')->middleware('CheckToken', 'CheckRoles');
