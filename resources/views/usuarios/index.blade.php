@@ -1,76 +1,146 @@
 @extends('layouts.main')
 @section('content')
 
-    <section class="full-box dashboard-contentPage">
-
-        <nav class="full-box dashboard-Navbar">
-            <ul class="full-box list-unstyled text-right">
-                <li class="pull-left">
-                    <a href="#!" class="btn-menu-dashboard"><i class="zmdi zmdi-more-vert"></i></a>
-                </li>
-                <li>
-            </ul>
-        </nav>
-
-        <div class="container-fluid">
-            <div class="page-header">
-            <h1 class="text-titles">Sistema <small>Versión 2</small></h1>
+        <div class="row" style="padding: 30px 50px;">
+            <div class="col-12" style="margin-bottom: 2rem;">
+                <a href="{{route('usuarios.create')}}">
+                    <button type="button" class="btn btn-success">Nuevo Registro</button>
+                </a>
             </div>
-        </div>
 
-        <div class="full-box text-center" style="padding: 30px 10px;">
-            <article class="full-box tile">
-                <div class="full-box tile-title text-center text-titles text-uppercase">
-                    Administradores
+            <!--
+            <form id="formulario1" action="{{route('usuarios.index')}}" method="get">
+                <div class="row">
+                    <div class="col-3">
+                        <label for="filtrar_nombre">Filtrar Nombre</label>
+                        <input type="text" class="form-control" name="filtrar_nombre" id="filtrar_nombre" autocomplete="off">
+                    </div>
+                    <div class="col-3">
+                        <label for="filtrar_apellido">Filtrar Apellido</label>
+                        <input type="text" class="form-control" name="filtrar_apellido" id="filtrar_apellido" autocomplete="off">
+                    </div>
+                    <div class="col-3">
+                        <label for="filtrar_documento">Filtrar Documento</label>
+                        <input type="text" class="form-control" name="filtrar_documento" id="filtrar_documento" autocomplete="off">
+                    </div>
+                    <div class="col-3" style="margin: auto;">
+                        <button type="submit" class="btn btn-primary" id="submit1">Filtrar</button>
+                    </div>
                 </div>
-                <div class="full-box tile-icon text-center">
-                    <i class="zmdi zmdi-account"></i>
+            </form>
+            -->
+
+            <table class="table table-bordered table-striped" id="data-table">
+                <thead>
+                    <tr>
+                        <td>Nombre</td>
+                        <td>Apellido</td>
+                        <td>Correo</td>
+                        <td>Opciones</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($usuarios2 as $item)
+                        <tr>
+                            <td>{{$item->nombre}}</td>
+                            <td>{{$item->apellido}}</td>
+                            <td>{{$item->email}}</td>
+                            <td>
+                                <a href="{{route('usuarios.show',$item->id)}}">
+                                    <button type="button" class="btn btn-primary">Editar</button>
+                                </a>
+                                <a href="{{route('usuarios.deleted',$item->id)}}">
+                                    <button type="button" class="btn btn-danger">Eliminar</button>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-end">
+                {!! $usuarios2->links() !!}
+            </div>
+            
+            <!--
+            <div class="col-12">
+                <table id="example" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Documento Tipo</th>
+                            <th>Documento Número</th>
+                            <th>Usuario</th>
+                            <th>Correo</th>
+                            <th>Estatus</th>
+                            <th>Creado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($usuarios2 as $item)
+                            <tr>
+                                <td>{{$item->nombre}}</td>
+                                <td>{{$item->apellido}}</td>
+                                <td>{{$item->documento_tipo}}</td>
+                                <td>{{$item->documento_numero}}</td>
+                                <td>{{$item->usuario}}</td>
+                                <td>{{$item->email}}</td>
+                                <td>{{$item->estatus}}</td>
+                                <td>{{$item->created_at}}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            -->
+            
+            <!--
+            <div class="col-12">
+                <table class="table table-striped mt-5">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Documento Tipo</th>
+                            <th>Documento Número</th>
+                            <th>Usuario</th>
+                            <th>Correo</th>
+                            <th>Estatus</th>
+                            <th>Creación</th>
+                            <th class="text-center">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($usuarios2 as $item)
+                            <tr>
+                                <td>{{$item->nombre." ".$item->apellido}}</td>
+                                <td>{{$item->documento_tipo}}</td>
+                                <td>{{$item->documento_numero}}</td>
+                                <td>{{$item->usuario}}</td>
+                                <td>{{$item->email}}</td>
+                                @if ($item->estatus==1)
+                                    <td>Activo</td>
+                                @else
+                                    <td>Inactivo</td>
+                                @endif
+                                <td>{{$item->created_at}}</td>
+                                <td class="text-center">
+                                    <a href="usuarios/{{$item->id}}">
+                                        <button type="button" class="btn btn-primary">Modificar</button>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-end">
+                    {!! $usuarios2->links() !!}
                 </div>
-                <div class="full-box tile-number text-titles">
-                    <p class="full-box">1</p>
-                    <small>Registrados</small>
-                </div>
-            </article>
-            <article class="full-box tile">
-                <div class="full-box tile-title text-center text-titles text-uppercase">
-                    Pasantes
-                </div>
-                <div class="full-box tile-icon text-center">
-                    <i class="zmdi zmdi-male-alt"></i>
-                </div>
-                <div class="full-box tile-number text-titles">
-                    <p class="full-box">100</p>
-                    <small>Registrados</small>
-                </div>
-            </article>
-            <article class="full-box tile">
-                <div class="full-box tile-title text-center text-titles text-uppercase">
-                    Modelos
-                </div>
-                <div class="full-box tile-icon text-center">
-                    <i class="zmdi zmdi-face"></i>
-                </div>
-                <div class="full-box tile-number text-titles">
-                    <p class="full-box">70</p>
-                    <small>Registrados</small>
-                </div>
-            </article>
-            <article class="full-box tile">
-                <div class="full-box tile-title text-center text-titles text-uppercase">
-                    Nóminas
-                </div>
-                <div class="full-box tile-icon text-center">
-                    <i class="zmdi zmdi-male-female"></i>
-                </div>
-                <div class="full-box tile-number text-titles">
-                    <p class="full-box">70</p>
-                    <small>Registrados</small>
-                </div>
-            </article>
+            </div>
+            -->
         </div>
-    </section>
 
     <script>
+
         function cerrarSession1(id){
             Swal.fire({
             title: '¿Estas seguro?',

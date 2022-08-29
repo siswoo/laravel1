@@ -11,6 +11,7 @@ class Modulos extends Model
 
     protected $fillable = [
         'nombre',
+        'id_roles',
         'route',
     ];
 }

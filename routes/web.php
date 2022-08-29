@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LobbyController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\ModulosController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RolesController;
 
@@ -40,7 +41,19 @@ Route::group(['middleware' => 'CheckToken'], function () {
     Route::get('lobby',[LobbyController::class,'index'])->name('lobby.index');
     
     Route::get('usuarios_admin', [UserController::class,'index'])->name('usuarios.index');
-    Route::get('modulos_admin', [UserController::class,'index'])->name('modulos.index');
+    Route::get('usuarios_create', [UserController::class,'create'])->name('usuarios.create');
+    Route::post('usuarios_store', [UserController::class,'store'])->name('usuarios.store');
+    Route::get('usuarios/{id}', [UserController::class,'show'])->name('usuarios.show');
+    Route::put('usuarios', [UserController::class,'update'])->name('usuarios.update');
+    Route::post('usuarios/deleted/{id}', [UserController::class,'deleted'])->name('usuarios.deleted');
+    //Route::get('table1', [UserController::class,'table1'])->name('table1');
+
+    Route::get('modulos_admin', [ModulosController::class,'index'])->name('modulos.index');
+    Route::get('modulos_create', [ModulosController::class,'create'])->name('modulos.create');
+    Route::get('modulos/{id}', [ModulosController::class,'show'])->name('modulos.show');
+    Route::put('modulos', [ModulosController::class,'update'])->name('modulos.update');
+    Route::post('modulos_store', [ModulosController::class,'store'])->name('modulos.store');
+
     Route::get('roles_create',[RolesController::class,'create'])->name('roles.create');
     Route::post('roles_store',[RolesController::class,'store'])->name('roles.store');
     Route::get('roles/{id}',[RolesController::class,'show']);
