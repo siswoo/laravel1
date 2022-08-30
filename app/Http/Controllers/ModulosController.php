@@ -116,4 +116,10 @@ class ModulosController extends Controller
         $rol->save();
         return response()->json(['estatus' => 'ok','msg' => 'Se ha modificado satisfactoriamente'],200);
     }
+
+    public function destroy(Request $request){
+        $modulos = Modulos::find($request->id);
+        $modulos->delete();
+        return response()->json(['estatus' => 'ok','msg' => 'Se ha eliminado correctamente'],200);
+    }
 }

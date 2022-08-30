@@ -45,7 +45,8 @@ Route::group(['middleware' => 'CheckToken'], function () {
     Route::post('usuarios_store', [UserController::class,'store'])->name('usuarios.store');
     Route::get('usuarios/{id}', [UserController::class,'show'])->name('usuarios.show');
     Route::put('usuarios', [UserController::class,'update'])->name('usuarios.update');
-    Route::post('usuarios/deleted/{id}', [UserController::class,'deleted'])->name('usuarios.deleted');
+    Route::post('usuarios/destroy', [UserController::class,'destroy'])->name('usuarios.destroy');
+    Route::get('usuarios/createRol/{id}', [UserController::class,'createRol'])->name('usuarios.createRol');
     //Route::get('table1', [UserController::class,'table1'])->name('table1');
 
     Route::get('modulos_admin', [ModulosController::class,'index'])->name('modulos.index');
@@ -53,11 +54,13 @@ Route::group(['middleware' => 'CheckToken'], function () {
     Route::get('modulos/{id}', [ModulosController::class,'show'])->name('modulos.show');
     Route::put('modulos', [ModulosController::class,'update'])->name('modulos.update');
     Route::post('modulos_store', [ModulosController::class,'store'])->name('modulos.store');
+    Route::post('modulos/destroy', [ModulosController::class,'destroy'])->name('modulos.destroy');
 
     Route::get('roles_create',[RolesController::class,'create'])->name('roles.create');
     Route::post('roles_store',[RolesController::class,'store'])->name('roles.store');
     Route::get('roles/{id}',[RolesController::class,'show']);
     Route::put('roles',[RolesController::class,'update'])->name('roles.update');
+    Route::post('roles/destroy', [RolesController::class,'destroy'])->name('roles.destroy');
 });
 
 Route::get('roles_admin',[RolesController::class,'index'])->name('roles.index')->middleware('CheckToken', 'CheckRoles');

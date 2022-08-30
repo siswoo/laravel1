@@ -62,7 +62,7 @@ class RolesController extends Controller
         $contador1 = $array[2];
         $html1 = $array[3];
 
-        $roles = Roles::paginate(10);
+        $roles = Roles::where('id','!=',1)->paginate(10);
 
         return view('roles.index',compact('usuarios','proceso1','contador1','html1','roles'));
     }
@@ -102,5 +102,16 @@ class RolesController extends Controller
         $rol->estatus = $request->estatus;
         $rol->save();
         return response()->json(['estatus' => 'ok','msg' => 'Se ha modificado satisfactoriamente'],200);
+    }
+
+    public function destroy(Request $request){
+        $proceso1 = Modulos::where('id_roles','=',$request->id)->get();
+        $contador1 = count($proceso1);
+        if($contador1>=1){
+            return response()->json(['estatus' => 'error','msg' => 'Este Rol aun tiene Modulos enlazados, eliminarlos primero'],200);    
+        }
+        $roles = Roles::find($request->id);
+        $roles->delete();
+        return response()->json(['estatus' => 'ok','msg' => 'Se ha eliminado correctamente'],200);
     }
 }

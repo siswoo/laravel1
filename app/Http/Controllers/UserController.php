@@ -59,17 +59,44 @@ class UserController extends Controller
         $filtrar_nombre = $request->get('filtrar_nombre');
         $filtrar_apellido = $request->get('filtrar_apellido');
         $filtrar_documento = $request->get('documento');
-
+        
         $array = $this->getData();
         $usuarios = $array[0];
         $proceso1 = $array[1];
         $contador1 = $array[2];
         $html1 = $array[3];
 
-        $usuarios2 = User::paginate(10);
-        //$usuarios2 = User::all();
+        $usuarios2 = User::where('id','!=',0);
+        
+        if($filtrar_nombre!=''){
+            $usuarios2 = $usuarios2->where('nombre','like','%'.$filtrar_nombre.'%');
+        }
 
-        return view('usuarios.index',compact('usuarios','proceso1','contador1','html1','usuarios2'));
+        if($filtrar_apellido!=''){
+            $usuarios2 = $usuarios2->where('apellido','like','%'.$filtrar_apellido.'%');
+        }
+
+        if($filtrar_documento!=''){
+            $usuarios2 = $usuarios2->where('documento_numero','like','%'.$filtrar_documento.'%');
+        }
+
+        $usuarios2 = $usuarios2->paginate(10);
+        $contador2 = count($usuarios2);
+
+        if($contador2>=1){
+            foreach($usuarios2 as $item){
+                $proceso3 = UsersRoles::where('id_users','=',$item->id)->join('roles','roles.id','=','users_roles.id_roles')->get();
+                $contador3 = count($proceso3);
+                if($contador3>=1){
+                    $html2[$item->id] = '';
+                    foreach($proceso3 as $item3){
+                        $html2[$item->id] .= $item3->nombre." | ";
+                    }
+                }
+            }
+        }
+
+        return view('usuarios.index',compact('usuarios','proceso1','contador1','html1','usuarios2','filtrar_nombre','filtrar_apellido','filtrar_documento','contador2','html2'));
     }
     
     public function listado(){
@@ -158,6 +185,23 @@ class UserController extends Controller
         return view('usuarios.show',compact(['usuarios','proceso1','contador1','html1','usuario']));
     }
 
+    public function destroy(Request $request){
+        $usuario = User::find($request->id);
+        $usuario->delete();
+        return response()->json(['estatus' => 'ok','msg' => 'Se ha eliminado correctamente'],200);
+    }
+
+    public function createRol(Request $request){
+        $array = $this->getData();
+        $usuarios = $array[0];
+        $proceso1 = $array[1];
+        $contador1 = $array[2];
+        $html1 = $array[3];
+
+        $usuarios2 = User::find($request->id);
+
+        return view('usuarios.createRol',compact('usuarios','proceso1','contador1','html1','usuarios2'));
+    }
 }
 
 

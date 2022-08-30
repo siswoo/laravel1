@@ -9,6 +9,7 @@
             </div>
             <div class="col-12">
                 <table class="table table-striped mt-5">
+                    @csrf
                     <thead>
                         <tr>
                             <th>Nombre</th>
@@ -35,6 +36,7 @@
                                     <a href="modulos/{{$item->id}}">
                                         <button type="button" class="btn btn-primary">Modificar</button>
                                     </a>
+                                    <button type="button" class="btn btn-danger" onclick="deleted1({{$item->id}});">Eliminar</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -63,6 +65,53 @@
                 window.location = "{{route('logout.logout')}}";
               }
         });
+        }
+
+        function deleted1(id){
+            Swal.fire({
+                title: '¿Estas seguro?',
+                text: "¿Desea eliminar dicho registro?",
+                icon: 'warning',
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if(result.value){
+                    var _token = $('input[name=_token]').val();
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{route('modulos.destroy')}}",
+                        dataType: "JSON",
+                        data: {
+                            'id': id,
+                            '_token': _token,
+                        },
+
+                        beforeSend: function(){},
+
+                        success: function(respuesta){
+                            console.log(respuesta);
+                            if(respuesta["estatus"]=="error"){
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: respuesta["msg"],
+                                    icon: 'error',
+                                    showConfirmButton: true,
+                                });
+                                return false;
+                            }
+                            window.location = "{{route('modulos.index')}}";
+                        },
+
+                        error: function(respuesta){
+                            console.log(respuesta['responseText']);
+                        }
+                    });
+                }
+            });
         }
     </script>
 
