@@ -35,5 +35,12 @@ class ModulosSeeders extends Seeder
             'route' => 'usuarios.index',
             'estatus' => 1,
         ]);
+
+        Modulos::factory()->create([
+            'nombre' => 'Crear Pasante',
+            'id_roles' => 2,
+            'route' => 'pasantias.create',
+            'estatus' => 1,
+        ]);
     }
 }

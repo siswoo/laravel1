@@ -4,7 +4,7 @@
     <form action="#" id="formulario1" method="POST">
         @csrf
         <div class="row" style="padding: 30px 50px;">
-            <div class="col-12 text-center" style="font-weight: bold; font-size: 20px; text-transform:uppercase;margin-bottom:1rem;">Creación de un Nuevo Rol</div>
+            <div class="col-12 text-center" style="font-weight: bold; font-size: 20px; text-transform:uppercase;margin-bottom:1rem;">Creación de un Nuevo Módulo</div>
             <div class="col-12" style="margin-top: 1rem;">
                 <label for="nombre">Nombre</label>
                 <input type="text" class="form-control" name="nombre" id="nombre" required autocomplete="off" value="{{old('nombre')}}" autofocus>

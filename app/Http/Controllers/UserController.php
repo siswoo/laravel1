@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UsersRequest;
 use App\Models\Modulos;
+use App\Models\Roles;
 use App\Models\User;
 use App\Models\UsersRoles;
 use GuzzleHttp\Psr7\Query;
@@ -198,9 +199,12 @@ class UserController extends Controller
         $contador1 = $array[2];
         $html1 = $array[3];
 
-        $usuarios2 = User::find($request->id);
+        $usersroles = UsersRoles::select('users_roles.id as users_roles_id','users_roles.id as id_users','roles.id as id_roles','roles.nombre as roles_nombre')->where('id_users','=',$request->id)->join('roles','roles.id','=','id_roles')->get();
+        $roles = Roles::all();
+        $contador2 = count($usersroles);
+        $usuario_id = $request->id;
 
-        return view('usuarios.createRol',compact('usuarios','proceso1','contador1','html1','usuarios2'));
+        return view('usuarios.createRol',compact('usuarios','proceso1','contador1','html1','usersroles','contador2','roles','usuario_id'));
     }
 }
 

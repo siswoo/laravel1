@@ -32,6 +32,7 @@ class UserFactory extends Factory
             //'rol1' => 1,
             //'avatar'=> $this->faker->text($maxNbChars = 200),
             'avatar' => $this->faker->imageUrl($width = 640, $height = 480),
+            'genero' => $this->faker->randomElement(['Masculino','Femenino','Transexual']),
             'estatus' => 1,
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),

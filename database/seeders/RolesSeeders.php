@@ -19,5 +19,10 @@ class RolesSeeders extends Seeder
             'nombre' => 'Admin',
             'estatus' => 1,
         ]);
+
+        Roles::factory()->create([
+            'nombre' => 'Pasantia Vip Occidente',
+            'estatus' => 1,
+        ]);
     }
 }

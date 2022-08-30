@@ -1,16 +1,37 @@
 @extends('layouts.main')
 @section('content')
 
-    <form action="#" id="formulario1" method="POST">
-        @csrf
-        <div class="row" style="padding: 30px 50px;">
-            <div class="col-12 text-center" style="font-weight: bold; font-size: 20px; text-transform:uppercase;margin-bottom:1rem;">Gestionar los Roles de Usuario</div>
-            <div class="col-12" style="margin-top: 1rem;">
-                <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" name="nombre" id="nombre" required autocomplete="off" autofocus value="{{old('nombre')}}">
+    <div class="row" style="padding: 30px 50px;">
+        <div class="col-12" style="font-weight: bold; font-size: 20px; text-transform:uppercase;margin-bottom:2rem;">Gestionar los Roles de Usuario</div>
+        @if($contador2>=1)
+            <div class="col-12 text-center" style="font-weight: bold; text-transform:uppercase; margin-top:2rem;">Los Roles que tiene el usuario</div>
+            @foreach ($usersroles as $item)
+                <div class="col-4 text-center" style="margin-top: 1rem;">
+                    <p><strong>{{$item->roles_nombre}}</strong></p>
+                    <button type="button" class="btn btn-danger" onclick="remover1({{$item->users_roles_id}});">Remover</button>
+                </div>
+            @endforeach
+        @endif
+
+        <div class="col-12 text-center" style="font-weight: bold; text-transform:uppercase; margin-top:2rem;">Colocar Nuevo Rol</div>
+        <form id="formulario1" action="{{route('UsersRoles.store')}}" method="POST">
+            @csrf
+            <div class="row" style="margin-top:2rem;">
+                <div class="col-6">
+                    <label for="id_roles">Roles Disponibles</label>
+                    <select name="id_roles" id="id_roles" class="form-control" required>
+                        <option value="">Seleccione</option>
+                        @foreach ($roles as $rol)
+                            <option value="{{$rol->id}}">{{$rol->nombre}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-6">
+                    <button type="submit" class="btn btn-success" style="margin-top:1.5rem;">Crear Nuevo Enlace</button>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 
     <script>
 
@@ -34,38 +55,22 @@
         
         $("#formulario1").on('submit', function(e){
             e.preventDefault();
-            var nombre = $('#nombre').val();
-            var apellido = $('#apellido').val();
-            var documento_tipo = $('#documento_tipo').val();
-            var documento_numero = $('#documento_numero').val();
-            var usuario = $('#usuario').val();
-            var password = $('#password').val();
-            var email = $('#email').val();
-            var estatus = $('#estatus').val();
+            var id_roles = $('#id_roles').val();
             var _token = $('input[name=_token]').val();
             $.ajax({
                 type: 'POST',
-                url: "{{route('usuarios.store')}}",
+                url: "{{route('UsersRoles.store')}}",
                 dataType: "JSON",
                 data: {
-                    'nombre': nombre,
-                    'apellido': apellido,
-                    'documento_tipo': documento_tipo,
-                    'documento_numero': documento_numero,
-                    'usuario': usuario,
-                    'password': password,
-                    'email': email,
-                    'estatus': estatus,
+                    'id_users': {{$usuario_id}},
+                    'id_roles': id_roles,
                     '_token': _token,
                 },
 
-                beforeSend: function(){
-                    $('#submit1').prop('disabled', true);
-                },
+                beforeSend: function(){},
                 
                 success: function(respuesta){
                     console.log(respuesta);
-                    $('#submit1').prop('disabled', false);
                     if(respuesta["estatus"]=="error"){
                         Swal.fire({
                             title: 'Error',
@@ -75,15 +80,61 @@
                         });
                         return false;
                     }
-                    window.location = "{{route('usuarios.index')}}";
+                    window.location = "{{Request::fullUrl()}}";
                 },
 
                 error: function(respuesta){
-                    $('#submit1').prop('disabled', false);
                     console.log(respuesta['responseText']);
                 }
             });
         });
+
+        function remover1(id){
+            Swal.fire({
+                title: '¿Estas seguro?',
+                text: "Esto Eliminara el Rol",
+                icon: 'warning',
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Deseo Eliminarla',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if(result.value){
+                    var _token = $('input[name=_token]').val();
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{route('UsersRoles.destroy')}}",
+                        dataType: "JSON",
+                        data: {
+                            'id': id,
+                            '_token': _token,
+                        },
+
+                        beforeSend: function(){},
+                        
+                        success: function(respuesta){
+                            console.log(respuesta);
+                            if(respuesta["estatus"]=="error"){
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: respuesta["msg"],
+                                    icon: 'error',
+                                    showConfirmButton: true,
+                                });
+                                return false;
+                            }
+                            window.location = "{{Request::fullUrl()}}";
+                        },
+
+                        error: function(respuesta){
+                            console.log(respuesta['responseText']);
+                        }
+                    });
+                }
+            });
+        }
 
     </script>
 

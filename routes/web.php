@@ -7,8 +7,10 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LobbyController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\ModulosController;
+use App\Http\Controllers\PasantiasController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\UsersRolesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +63,12 @@ Route::group(['middleware' => 'CheckToken'], function () {
     Route::get('roles/{id}',[RolesController::class,'show']);
     Route::put('roles',[RolesController::class,'update'])->name('roles.update');
     Route::post('roles/destroy', [RolesController::class,'destroy'])->name('roles.destroy');
+
+    Route::post('UsersRoles',[UsersRolesController::class,'store'])->name('UsersRoles.store');
+    Route::post('UsersRoles/destroy',[UsersRolesController::class,'destroy'])->name('UsersRoles.destroy');
+    
+    Route::get('pasantias/create',[PasantiasController::class,'pasantiaVipCreate'])->name('pasantias.create');
+    Route::post('pasantias',[PasantiasController::class,'pasantiaVipStore'])->name('pasantiaVipStore.store');
 });
 
 Route::get('roles_admin',[RolesController::class,'index'])->name('roles.index')->middleware('CheckToken', 'CheckRoles');
