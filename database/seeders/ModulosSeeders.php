@@ -39,7 +39,63 @@ class ModulosSeeders extends Seeder
         Modulos::factory()->create([
             'nombre' => 'Crear Pasante',
             'id_roles' => 2,
-            'route' => 'pasantias.create',
+            'route' => 'pasantiaVip.create',
+            'estatus' => 1,
+        ]);
+
+        Modulos::factory()->create([
+            'nombre' => 'Crear Pasante',
+            'id_roles' => 3,
+            'route' => 'pasantiaNorte.create',
+            'estatus' => 1,
+        ]);
+
+        Modulos::factory()->create([
+            'nombre' => 'Crear Pasante',
+            'id_roles' => 4,
+            'route' => 'pasantiaTunal.create',
+            'estatus' => 1,
+        ]);
+
+        Modulos::factory()->create([
+            'nombre' => 'Crear Pasante',
+            'id_roles' => 5,
+            'route' => 'pasantiaVipSuba.create',
+            'estatus' => 1,
+        ]);
+
+        Modulos::factory()->create([
+            'nombre' => 'Crear Pasante',
+            'id_roles' => 6,
+            'route' => 'pasantiaSoacha.create',
+            'estatus' => 1,
+        ]);
+
+        Modulos::factory()->create([
+            'nombre' => 'Crear Pasante',
+            'id_roles' => 7,
+            'route' => 'pasantiaBucaramanga.create',
+            'estatus' => 1,
+        ]);
+
+        Modulos::factory()->create([
+            'nombre' => 'Crear Pasante',
+            'id_roles' => 8,
+            'route' => 'pasantiaCali.create',
+            'estatus' => 1,
+        ]);
+
+        Modulos::factory()->create([
+            'nombre' => 'Crear Pasante',
+            'id_roles' => 9,
+            'route' => 'pasantiaSatelite.create',
+            'estatus' => 1,
+        ]);
+
+        Modulos::factory()->create([
+            'nombre' => 'Sedes',
+            'id_roles' => 1,
+            'route' => 'sedes.index',
             'estatus' => 1,
         ]);
     }

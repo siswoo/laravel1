@@ -10,6 +10,7 @@ use App\Http\Controllers\ModulosController;
 use App\Http\Controllers\PasantiasController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RolesController;
+use App\Http\Controllers\SedesController;
 use App\Http\Controllers\UsersRolesController;
 
 /*
@@ -67,8 +68,22 @@ Route::group(['middleware' => 'CheckToken'], function () {
     Route::post('UsersRoles',[UsersRolesController::class,'store'])->name('UsersRoles.store');
     Route::post('UsersRoles/destroy',[UsersRolesController::class,'destroy'])->name('UsersRoles.destroy');
     
-    Route::get('pasantias/create',[PasantiasController::class,'pasantiaVipCreate'])->name('pasantias.create');
-    Route::post('pasantias',[PasantiasController::class,'pasantiaVipStore'])->name('pasantiaVipStore.store');
+    Route::get('pasantias/pasantiaVip',[PasantiasController::class,'pasantiaVipCreate'])->name('pasantiaVip.create');
+    Route::get('pasantias/pasantiaNorte',[PasantiasController::class,'pasantiaNorteCreate'])->name('pasantiaNorte.create');
+    Route::get('pasantias/pasantiaTunal',[PasantiasController::class,'pasantiaTunalCreate'])->name('pasantiaTunal.create');
+    Route::get('pasantias/pasantiaVipSuba',[PasantiasController::class,'pasantiaVipSubaCreate'])->name('pasantiaVipSuba.create');
+    Route::get('pasantias/pasantiaSoacha',[PasantiasController::class,'pasantiaSoachaCreate'])->name('pasantiaSoacha.create');
+    Route::get('pasantias/pasantiaBucaramanga',[PasantiasController::class,'pasantiaBucaramangaCreate'])->name('pasantiaBucaramanga.create');
+    Route::get('pasantias/pasantiaCali',[PasantiasController::class,'pasantiaCaliCreate'])->name('pasantiaCali.create');
+    Route::get('pasantias/pasantiaSatelite',[PasantiasController::class,'pasantiaSateliteCreate'])->name('pasantiaSatelite.create');
+    Route::post('pasantias',[PasantiasController::class,'store'])->name('pasantias.store');
+    
+    Route::get('sedes',[SedesController::class,'index'])->name('sedes.index');
+    Route::get('sedes/create',[SedesController::class,'create'])->name('sedes.create');
+    Route::post('sedes_store',[SedesController::class,'store'])->name('sedes.store');
+    Route::get('sedes/{id}',[SedesController::class,'show']);
+    Route::put('sedes',[SedesController::class,'update'])->name('sedes.update');
+    Route::post('sedes/destroy',[SedesController::class,'destroy'])->name('sedes.destroy');
 });
 
 Route::get('roles_admin',[RolesController::class,'index'])->name('roles.index')->middleware('CheckToken', 'CheckRoles');

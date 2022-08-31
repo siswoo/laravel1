@@ -121,7 +121,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: "{{route('pasantiaVipStore.store')}}",
+                url: "{{route('pasantias.store')}}",
                 dataType: "JSON",
                 data: {
                     'nombre': nombre,
@@ -135,6 +135,7 @@
                     'genero': genero,
                     'entero': entero,
                     'estatus': estatus,
+                    'sede': {{$sede}},
                     '_token': _token,
                 },
 
@@ -161,7 +162,7 @@
                             showConfirmButton: true,
                         });
                         setTimeout(function(){
-                            window.location = "{{route('pasantias.create')}}";
+                            window.location = "{{route('pasantiaVip.create')}}";
                         }, 10000);
                     }
                 },

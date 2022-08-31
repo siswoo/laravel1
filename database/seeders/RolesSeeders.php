@@ -24,5 +24,40 @@ class RolesSeeders extends Seeder
             'nombre' => 'Pasantia Vip Occidente',
             'estatus' => 1,
         ]);
+
+        Roles::factory()->create([
+            'nombre' => 'Pasantia Norte',
+            'estatus' => 1,
+        ]);
+
+        Roles::factory()->create([
+            'nombre' => 'Pasantia Tunal',
+            'estatus' => 1,
+        ]);
+
+        Roles::factory()->create([
+            'nombre' => 'Pasantia Vip Suba',
+            'estatus' => 1,
+        ]);
+
+        Roles::factory()->create([
+            'nombre' => 'Pasantia Soacha',
+            'estatus' => 1,
+        ]);
+
+        Roles::factory()->create([
+            'nombre' => 'Pasantia Bucaramanga',
+            'estatus' => 1,
+        ]);
+
+        Roles::factory()->create([
+            'nombre' => 'Pasantia Cali',
+            'estatus' => 1,
+        ]);
+
+        Roles::factory()->create([
+            'nombre' => 'Pasantia Satelite',
+            'estatus' => 1,
+        ]);
     }
 }

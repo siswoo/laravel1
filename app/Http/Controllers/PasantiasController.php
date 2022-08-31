@@ -61,11 +61,96 @@ class PasantiasController extends Controller
         $contador1 = $array[2];
         $html1 = $array[3];
 
-        return view('pasantias.create',compact('usuarios','proceso1','contador1','html1'));
+        $sede = 1;
+
+        return view('pasantias.create',compact('usuarios','proceso1','contador1','html1','sede'));
     }
 
-    function pasantiaVipStore(Request $request){
-        
+    function pasantiaNorteCreate(){
+        $array = $this->getData();
+        $usuarios = $array[0];
+        $proceso1 = $array[1];
+        $contador1 = $array[2];
+        $html1 = $array[3];
+
+        $sede = 2;
+
+        return view('pasantias.create',compact('usuarios','proceso1','contador1','html1','sede'));
+    }
+
+    function pasantiaTunalCreate(){
+        $array = $this->getData();
+        $usuarios = $array[0];
+        $proceso1 = $array[1];
+        $contador1 = $array[2];
+        $html1 = $array[3];
+
+        $sede = 3;
+
+        return view('pasantias.create',compact('usuarios','proceso1','contador1','html1','sede'));
+    }
+
+    function pasantiaVipSubaCreate(){
+        $array = $this->getData();
+        $usuarios = $array[0];
+        $proceso1 = $array[1];
+        $contador1 = $array[2];
+        $html1 = $array[3];
+
+        $sede = 4;
+
+        return view('pasantias.create',compact('usuarios','proceso1','contador1','html1','sede'));
+    }
+
+    function pasantiaSoachaCreate(){
+        $array = $this->getData();
+        $usuarios = $array[0];
+        $proceso1 = $array[1];
+        $contador1 = $array[2];
+        $html1 = $array[3];
+
+        $sede = 5;
+
+        return view('pasantias.create',compact('usuarios','proceso1','contador1','html1','sede'));
+    }
+
+    function pasantiaBucaramangaCreate(){
+        $array = $this->getData();
+        $usuarios = $array[0];
+        $proceso1 = $array[1];
+        $contador1 = $array[2];
+        $html1 = $array[3];
+
+        $sede = 6;
+
+        return view('pasantias.create',compact('usuarios','proceso1','contador1','html1','sede'));
+    }
+
+    function pasantiaCaliCreate(){
+        $array = $this->getData();
+        $usuarios = $array[0];
+        $proceso1 = $array[1];
+        $contador1 = $array[2];
+        $html1 = $array[3];
+
+        $sede = 7;
+
+        return view('pasantias.create',compact('usuarios','proceso1','contador1','html1','sede'));
+    }
+
+    function pasantiaSateliteCreate(){
+        $array = $this->getData();
+        $usuarios = $array[0];
+        $proceso1 = $array[1];
+        $contador1 = $array[2];
+        $html1 = $array[3];
+
+        $sede = 8;
+
+        return view('pasantias.create',compact('usuarios','proceso1','contador1','html1','sede'));
+    }
+
+    function store(Request $request){
         $proceso1 = User::where('documento_numero','=',$request->documento_numero)->get();
         $proceso2 = User::where('email','=',$request->email)->get();
         $contador1 = count($proceso1);
@@ -96,7 +181,7 @@ class PasantiasController extends Controller
 
         $pasante = Pasantes::create([
             'id_users' => $usuario->id,
-            'sede' => 1,
+            'sede' => $request->sede,
             'estatus' => $request->estatus,
         ]);
 
