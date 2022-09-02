@@ -24,7 +24,8 @@ class UsersRolesSeeder extends Seeder
             'id_users' => 1,
             'id_roles' => 2,
         ]);
-
+        
+        /*
         UsersRoles::factory()->create([
             'id_users' => 1,
             'id_roles' => 3,
@@ -58,6 +59,16 @@ class UsersRolesSeeder extends Seeder
         UsersRoles::factory()->create([
             'id_users' => 1,
             'id_roles' => 9,
+        ]);
+        */
+        UsersRoles::factory()->create([
+            'id_users' => 1,
+            'id_roles' => 10,
+        ]);
+
+        UsersRoles::factory()->create([
+            'id_users' => 1,
+            'id_roles' => 11,
         ]);
     }
 }

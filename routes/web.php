@@ -6,7 +6,9 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LobbyController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\ModelosController;
 use App\Http\Controllers\ModulosController;
+use App\Http\Controllers\PasantesController;
 use App\Http\Controllers\PasantiasController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RolesController;
@@ -84,6 +86,15 @@ Route::group(['middleware' => 'CheckToken'], function () {
     Route::get('sedes/{id}',[SedesController::class,'show']);
     Route::put('sedes',[SedesController::class,'update'])->name('sedes.update');
     Route::post('sedes/destroy',[SedesController::class,'destroy'])->name('sedes.destroy');
+
+    Route::get('pasantes/info',[PasantesController::class,'info'])->name('pasantes.info');
+    Route::get('pasantes/indexVip',[PasantesController::class,'indexVip'])->name('pasantesVip.index');
+    Route::get('pasantes/{sede}/{id}',[PasantesController::class,'show'])->name('pasantes.show');
+    Route::put('pasantes',[PasantesController::class,'update'])->name('pasantes.update');
+    Route::post('pasantes/aceptar1',[PasantesController::class,'aceptar1'])->name('pasantes.aceptar1');
+    Route::post('pasantes/rechazar1',[PasantesController::class,'rechazar1'])->name('pasantes.rechazar1');
+
+    Route::get('modelos/indexVip',[ModelosController::class,'indexVip'])->name('modelosVip.index');
 });
 
 Route::get('roles_admin',[RolesController::class,'index'])->name('roles.index')->middleware('CheckToken', 'CheckRoles');

@@ -172,6 +172,7 @@ class PasantiasController extends Controller
             'documento_numero' => $request->documento_numero,
             'usuario' => $usuario,
             'password' => $request->documento_numero,
+            'telefono' => $request->telefono,
             'email' => $request->email,
             'genero' => $request->genero,
             'barrio' => $request->barrio,

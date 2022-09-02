@@ -98,5 +98,26 @@ class ModulosSeeders extends Seeder
             'route' => 'sedes.index',
             'estatus' => 1,
         ]);
+
+        Modulos::factory()->create([
+            'nombre' => 'Información',
+            'id_roles' => 10,
+            'route' => 'pasantes.info',
+            'estatus' => 1,
+        ]);
+
+        Modulos::factory()->create([
+            'nombre' => 'Pasantes',
+            'id_roles' => 11,
+            'route' => 'pasantesVip.index',
+            'estatus' => 1,
+        ]);
+
+        Modulos::factory()->create([
+            'nombre' => 'Modelos',
+            'id_roles' => 11,
+            'route' => 'modelosVip.index',
+            'estatus' => 1,
+        ]);
     }
 }

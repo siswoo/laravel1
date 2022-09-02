@@ -59,5 +59,16 @@ class RolesSeeders extends Seeder
             'nombre' => 'Pasantia Satelite',
             'estatus' => 1,
         ]);
+
+        Roles::factory()->create([
+            'nombre' => 'Pasante',
+            'estatus' => 1,
+        ]);
+
+        Roles::factory()->create([
+            'nombre' => 'RRHH Vip Occidente',
+            'estatus' => 1,
+        ]);
+        
     }
 }
