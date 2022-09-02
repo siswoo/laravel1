@@ -138,12 +138,12 @@ class PasantesController extends Controller
         if($contador1==0){
             return response()->json(['estatus' => 'error','msg' => 'Error, Este pasante ya tiene un estatus asignado'],200);
         }else{
-            $modelo = Modelos::create([
-                'id_users' => $pasante->id_users,
-                'sede' => $pasante->sede,
-                'estatus' => 1,
-            ]);
             foreach($pasante as $item){
+                $modelo = Modelos::create([
+                    'id_users' => $item->id_users,
+                    'sede' => $item->sede,
+                    'estatus' => 1,
+                ]);
                 $item->estatus = 2;
                 $item->save();
             }
