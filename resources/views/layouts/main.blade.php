@@ -1,13 +1,4 @@
 @include('layouts.partials.header')
-<script src="{{asset('js/jquery-3.1.1.min.js')}}"></script>
-<!--<script src="{{asset('js/sweetalert2.min.js')}}"></script>-->
-<!--<script src="{{asset('js/bootstrap.min.js')}}"></script>-->
-<script src="{{asset('js/material.min.js')}}"></script>
-<script src="{{asset('js/ripples.min.js')}}"></script>
-<script src="{{asset('js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
-<script src="{{asset('js/main.js')}}"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <body>
     @include('layouts.partials.navbar')
     <section class="full-box dashboard-contentPage">

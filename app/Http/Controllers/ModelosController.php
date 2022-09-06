@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RolesRequest;
+use App\Models\Modelos;
 use App\Models\Modulos;
-use App\Models\Roles;
 use App\Models\User;
 use App\Models\UsersRoles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class RolesController extends Controller
+class ModelosController extends Controller
 {
 
     protected function getData(){
@@ -55,63 +54,14 @@ class RolesController extends Controller
         return $array;
     }
 
-    function index(){
+    function indexVip (){
         $array = $this->getData();
         $usuarios = $array[0];
         $proceso1 = $array[1];
         $contador1 = $array[2];
         $html1 = $array[3];
-
-        $roles = Roles::where('id','!=',1)->paginate(10);
-
-        return view('roles.index',compact('usuarios','proceso1','contador1','html1','roles'));
-    }
-
-    function create(){
-        $array = $this->getData();
-        $usuarios = $array[0];
-        $proceso1 = $array[1];
-        $contador1 = $array[2];
-        $html1 = $array[3];
-
-        return view('roles.create',compact('usuarios','proceso1','contador1','html1'));
-    }
-
-    function store(RolesRequest $request){
-        $rol = Roles::create([
-            'nombre' => $request->nombre,
-            'estatus' => $request->estatus,
-        ]);
-
-        return response()->json(['estatus' => 'ok','msg' => 'Se ha creado satisfactoriamente'],200);
-    }
-
-    function show($id){
-        $array = $this->getData();
-        $usuarios = $array[0];
-        $proceso1 = $array[1];
-        $contador1 = $array[2];
-        $html1 = $array[3];
-        $rol = Roles::find($id);
-        return view('roles.show',compact('usuarios','proceso1','contador1','html1','rol'));
-    }
-
-    function update(Request $request){
-        $rol = Roles::find($request->id);
-        $rol->nombre = $request->nombre;
-        $rol->estatus = $request->estatus;
-        $rol->save();
-        return response()->json(['estatus' => 'ok','msg' => 'Se ha modificado satisfactoriamente'],200);
-    }
-
-    public function destroy(Request $request){
-        $proceso1 = Modulos::where('id_roles','=',$request->id)->get();
-        $contador1 = count($proceso1);
-        if($contador1>=1){
-            return response()->json(['estatus' => 'error','msg' => 'Este Rol aun tiene Modulos enlazados, eliminarlos primero'],200);    
-        }
-        $roles = Roles::find($request->id);
-        $roles->delete();
-        return response()->json(['estatus' => 'ok','msg' => 'Se ha eliminado correctamente'],200);
+        $sede = 1;
+        $modelos = Modelos::select('modelos.id as modelos_id','modelos.estatus as modelos_estatus','modelos.sede as modelos_sede','modelos.created_at as modelos_created_at','users.id as users_id','users.nombre as users_nombre','users.apellido as users_apellido','users.documento_tipo as users_documento_tipo','users.documento_numero as users_documento_numero','users.email as users_email','users.telefono as users_telefono')->where('sede','=',$sede)->join('users','modelos.id_users','=','users.id')->orderBy('modelos.id','DESC')->paginate(10);
+        return view('modelos.index',compact('usuarios','proceso1','contador1','html1','sede','modelos'));
     }
 }

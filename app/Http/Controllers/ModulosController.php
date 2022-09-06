@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RolesRequest;
+use App\Http\Requests\ModulosRequest;
 use App\Models\Modulos;
 use App\Models\Roles;
 use App\Models\User;
@@ -11,7 +11,7 @@ use App\Models\UsersRoles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class RolesController extends Controller
+class ModulosController extends Controller
 {
 
     protected function getData(){
@@ -62,9 +62,9 @@ class RolesController extends Controller
         $contador1 = $array[2];
         $html1 = $array[3];
 
-        $roles = Roles::where('id','!=',1)->paginate(10);
+        $modulos = Modulos::select('modulos.nombre as nombre','roles.nombre as nombre2','modulos.id as id','modulos.estatus as estatus','modulos.created_at as created_at','modulos.route as route')->join('roles','roles.id','=','modulos.id_roles')->paginate(10);
 
-        return view('roles.index',compact('usuarios','proceso1','contador1','html1','roles'));
+        return view('modulos.index',compact('usuarios','proceso1','contador1','html1','modulos'));
     }
 
     function create(){
@@ -74,12 +74,20 @@ class RolesController extends Controller
         $contador1 = $array[2];
         $html1 = $array[3];
 
-        return view('roles.create',compact('usuarios','proceso1','contador1','html1'));
+        $html2 = '';
+        $roles = Roles::all();
+        foreach($roles as $rol){
+            $html2 .= '<option value="'.$rol->id.'">'.$rol->nombre.'</option>';
+        }
+
+        return view('modulos.create',compact('usuarios','proceso1','contador1','html1','html2'));
     }
 
-    function store(RolesRequest $request){
-        $rol = Roles::create([
+    function store(ModulosRequest $request){
+        $modulo = Modulos::create([
             'nombre' => $request->nombre,
+            'id_roles' => $request->id_roles,
+            'route' => $request->route,
             'estatus' => $request->estatus,
         ]);
 
@@ -92,26 +100,26 @@ class RolesController extends Controller
         $proceso1 = $array[1];
         $contador1 = $array[2];
         $html1 = $array[3];
-        $rol = Roles::find($id);
-        return view('roles.show',compact('usuarios','proceso1','contador1','html1','rol'));
+        $modulos = Modulos::find($id);
+        //$modulos = Modulos::select('modulos.nombre as nombre','roles.nombre as nombre2','modulos.id as id','modulos.estatus as estatus','modulos.route as route')->join('roles','roles.id','=','modulos.id_roles')->where('modulos.id','=',$id)->get();
+        //$contador2 = count($modulos);
+        $roles = Roles::all();
+        return view('modulos.show',compact('usuarios','proceso1','contador1','html1','modulos','roles'));
     }
 
     function update(Request $request){
-        $rol = Roles::find($request->id);
+        $rol = Modulos::find($request->id);
         $rol->nombre = $request->nombre;
+        $rol->id_roles = $request->id_roles;
+        $rol->route = $request->route;
         $rol->estatus = $request->estatus;
         $rol->save();
         return response()->json(['estatus' => 'ok','msg' => 'Se ha modificado satisfactoriamente'],200);
     }
 
     public function destroy(Request $request){
-        $proceso1 = Modulos::where('id_roles','=',$request->id)->get();
-        $contador1 = count($proceso1);
-        if($contador1>=1){
-            return response()->json(['estatus' => 'error','msg' => 'Este Rol aun tiene Modulos enlazados, eliminarlos primero'],200);    
-        }
-        $roles = Roles::find($request->id);
-        $roles->delete();
+        $modulos = Modulos::find($request->id);
+        $modulos->delete();
         return response()->json(['estatus' => 'ok','msg' => 'Se ha eliminado correctamente'],200);
     }
 }

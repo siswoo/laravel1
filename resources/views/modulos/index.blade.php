@@ -3,7 +3,7 @@
 
         <div class="row" style="padding: 30px 50px;">
             <div class="col-12" style="margin-bottom: 2rem;">
-                <a href="{{route('roles.create')}}">
+                <a href="{{route('modulos.create')}}">
                     <button type="button" class="btn btn-success">Nuevo Registro</button>
                 </a>
             </div>
@@ -13,15 +13,19 @@
                     <thead>
                         <tr>
                             <th>Nombre</th>
+                            <th>Roles</th>
+                            <th>Rutas</th>
                             <th>Estatus</th>
                             <th>Creación</th>
                             <th class="text-center">Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($roles as $item)
+                        @foreach($modulos as $item)
                             <tr>
                                 <td>{{$item->nombre}}</td>
+                                <td>{{$item->nombre2}}</td>
+                                <td>{{$item->route}}</td>
                                 @if ($item->estatus==1)
                                     <td>Activo</td>
                                 @else
@@ -29,7 +33,7 @@
                                 @endif
                                 <td>{{$item->created_at}}</td>
                                 <td class="text-center">
-                                    <a href="roles/{{$item->id}}">
+                                    <a href="modulos/{{$item->id}}">
                                         <button type="button" class="btn btn-primary">Modificar</button>
                                     </a>
                                     <button type="button" class="btn btn-danger" onclick="deleted1({{$item->id}});">Eliminar</button>
@@ -39,7 +43,7 @@
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-end">
-                    {!! $roles->links() !!}
+                    {!! $modulos->links() !!}
                 </div>
             </div>
         </div>
@@ -65,49 +69,49 @@
 
         function deleted1(id){
             Swal.fire({
-            title: '¿Estas seguro?',
-            text: "¿Desea eliminar dicho registro?",
-            icon: 'warning',
-            showConfirmButton: true,
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, eliminar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if(result.value){
-                var _token = $('input[name=_token]').val();
-                $.ajax({
-                    type: 'POST',
-                    url: "{{route('roles.destroy')}}",
-                    dataType: "JSON",
-                    data: {
-                        'id': id,
-                        '_token': _token,
-                    },
+                title: '¿Estas seguro?',
+                text: "¿Desea eliminar dicho registro?",
+                icon: 'warning',
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if(result.value){
+                    var _token = $('input[name=_token]').val();
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{route('modulos.destroy')}}",
+                        dataType: "JSON",
+                        data: {
+                            'id': id,
+                            '_token': _token,
+                        },
 
-                    beforeSend: function(){},
+                        beforeSend: function(){},
 
-                    success: function(respuesta){
-                        console.log(respuesta);
-                        if(respuesta["estatus"]=="error"){
-                            Swal.fire({
-                                title: 'Error',
-                                text: respuesta["msg"],
-                                icon: 'error',
-                                showConfirmButton: true,
-                            });
-                            return false;
+                        success: function(respuesta){
+                            console.log(respuesta);
+                            if(respuesta["estatus"]=="error"){
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: respuesta["msg"],
+                                    icon: 'error',
+                                    showConfirmButton: true,
+                                });
+                                return false;
+                            }
+                            window.location = "{{route('modulos.index')}}";
+                        },
+
+                        error: function(respuesta){
+                            console.log(respuesta['responseText']);
                         }
-                        window.location = "{{route('roles.index')}}";
-                    },
-
-                    error: function(respuesta){
-                        console.log(respuesta['responseText']);
-                    }
-                });
-              }
-        });
+                    });
+                }
+            });
         }
     </script>
 

@@ -3,7 +3,7 @@
 
         <div class="row" style="padding: 30px 50px;">
             <div class="col-12" style="margin-bottom: 2rem;">
-                <a href="{{route('roles.create')}}">
+                <a href="{{route('sedes.create')}}">
                     <button type="button" class="btn btn-success">Nuevo Registro</button>
                 </a>
             </div>
@@ -13,23 +13,19 @@
                     <thead>
                         <tr>
                             <th>Nombre</th>
-                            <th>Estatus</th>
+                            <th>Ciudad</th>
                             <th>Creación</th>
                             <th class="text-center">Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($roles as $item)
+                        @foreach($sedes as $item)
                             <tr>
                                 <td>{{$item->nombre}}</td>
-                                @if ($item->estatus==1)
-                                    <td>Activo</td>
-                                @else
-                                    <td>Inactivo</td>
-                                @endif
+                                <td>{{$item->ciudad}}</td>
                                 <td>{{$item->created_at}}</td>
                                 <td class="text-center">
-                                    <a href="roles/{{$item->id}}">
+                                    <a href="sedes/{{$item->id}}">
                                         <button type="button" class="btn btn-primary">Modificar</button>
                                     </a>
                                     <button type="button" class="btn btn-danger" onclick="deleted1({{$item->id}});">Eliminar</button>
@@ -39,7 +35,7 @@
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-end">
-                    {!! $roles->links() !!}
+                    {!! $sedes->links() !!}
                 </div>
             </div>
         </div>
@@ -79,7 +75,7 @@
                 var _token = $('input[name=_token]').val();
                 $.ajax({
                     type: 'POST',
-                    url: "{{route('roles.destroy')}}",
+                    url: "{{route('sedes.destroy')}}",
                     dataType: "JSON",
                     data: {
                         'id': id,
@@ -99,7 +95,7 @@
                             });
                             return false;
                         }
-                        window.location = "{{route('roles.index')}}";
+                        window.location = "{{route('sedes.index')}}";
                     },
 
                     error: function(respuesta){

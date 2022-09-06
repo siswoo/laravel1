@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RolesRequest;
 use App\Models\Modulos;
-use App\Models\Roles;
+use App\Models\Sedes;
 use App\Models\User;
 use App\Models\UsersRoles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class RolesController extends Controller
+class SedesController extends Controller
 {
 
     protected function getData(){
@@ -62,11 +61,11 @@ class RolesController extends Controller
         $contador1 = $array[2];
         $html1 = $array[3];
 
-        $roles = Roles::where('id','!=',1)->paginate(10);
+        $sedes = Sedes::paginate(10);
 
-        return view('roles.index',compact('usuarios','proceso1','contador1','html1','roles'));
+        return view('sedes.index',compact('usuarios','proceso1','contador1','html1','sedes'));
     }
-
+    
     function create(){
         $array = $this->getData();
         $usuarios = $array[0];
@@ -74,13 +73,26 @@ class RolesController extends Controller
         $contador1 = $array[2];
         $html1 = $array[3];
 
-        return view('roles.create',compact('usuarios','proceso1','contador1','html1'));
+        return view('sedes.create',compact('usuarios','proceso1','contador1','html1'));
     }
 
-    function store(RolesRequest $request){
-        $rol = Roles::create([
+    function store(Request $request){
+        
+        $proceso1 = Sedes::where('nombre','=',$request->nombre)->get();
+        $contador1 = count($proceso1);
+
+        if($contador1>=1){
+            return response()->json(['estatus' => 'error','msg' => 'El nombre ya esta registrado'],200);
+        }
+        
+        $usuario = Sedes::create([
             'nombre' => $request->nombre,
-            'estatus' => $request->estatus,
+            'direccion' => $request->direccion,
+            'ciudad' => $request->ciudad,
+            'descripcion' => $request->descripcion,
+            'responsable' => $request->responsable,
+            'cedula' => $request->cedula,
+            'rut' => $request->rut,
         ]);
 
         return response()->json(['estatus' => 'ok','msg' => 'Se ha creado satisfactoriamente'],200);
@@ -92,26 +104,33 @@ class RolesController extends Controller
         $proceso1 = $array[1];
         $contador1 = $array[2];
         $html1 = $array[3];
-        $rol = Roles::find($id);
-        return view('roles.show',compact('usuarios','proceso1','contador1','html1','rol'));
+
+        $sede = Sedes::find($id);
+
+        if(!$sede){
+            return redirect()->route('sedes.index');
+        }
+
+        return view('sedes.show',compact('usuarios','proceso1','contador1','html1','sede'));
     }
 
     function update(Request $request){
-        $rol = Roles::find($request->id);
-        $rol->nombre = $request->nombre;
-        $rol->estatus = $request->estatus;
-        $rol->save();
-        return response()->json(['estatus' => 'ok','msg' => 'Se ha modificado satisfactoriamente'],200);
+        $sede = Sedes::find($request->id);
+        $sede->nombre = $request->nombre;
+        $sede->direccion = $request->direccion;
+        $sede->ciudad = $request->ciudad;
+        $sede->descripcion = $request->descripcion;
+        $sede->responsable = $request->responsable;
+        $sede->cedula = $request->cedula;
+        $sede->rut = $request->rut;
+        $sede->save();
+
+        return response()->json(['estatus' => 'ok','msg' => 'Se ha modificado exitosamente'],200);
     }
 
     public function destroy(Request $request){
-        $proceso1 = Modulos::where('id_roles','=',$request->id)->get();
-        $contador1 = count($proceso1);
-        if($contador1>=1){
-            return response()->json(['estatus' => 'error','msg' => 'Este Rol aun tiene Modulos enlazados, eliminarlos primero'],200);    
-        }
-        $roles = Roles::find($request->id);
-        $roles->delete();
+        $usuario = Sedes::find($request->id);
+        $usuario->delete();
         return response()->json(['estatus' => 'ok','msg' => 'Se ha eliminado correctamente'],200);
     }
 }

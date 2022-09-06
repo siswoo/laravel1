@@ -23,6 +23,8 @@ class UserSeeders extends Seeder
             'usuario' => 'JDolarJ',
             'password' => '2421187',
             'email' => 'juanmaldonado.co@gmail.com',
+            'genero' => 'Masculino',
+            'telefono' => '3016984868',
             'estatus' => 1,
         ]);
         User::factory(10)->create();

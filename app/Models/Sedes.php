@@ -5,13 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Modulos extends Model
+class Sedes extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'nombre',
-        'id_roles',
-        'route',
+        'direccion',
+        'ciudad',
+        'descripcion',
+        'responsable',
+        'cedula',
+        'rut',
     ];
 }
