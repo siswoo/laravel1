@@ -69,6 +69,45 @@ class RolesSeeders extends Seeder
             'nombre' => 'RRHH Vip Occidente',
             'estatus' => 1,
         ]);
+
+        Roles::factory()->create([
+            'nombre' => 'RRHH Norte',
+            'estatus' => 1,
+        ]);
+
+        Roles::factory()->create([
+            'nombre' => 'RRHH Tunal',
+            'estatus' => 1,
+        ]);
+
+        Roles::factory()->create([
+            'nombre' => 'RRHH Vip Suba',
+            'estatus' => 1,
+        ]);
+
+        Roles::factory()->create([
+            'nombre' => 'RRHH Soacha',
+            'estatus' => 1,
+        ]);
+
+        Roles::factory()->create([
+            'nombre' => 'RRHH Bucaramanga',
+            'estatus' => 1,
+        ]);
+
+        Roles::factory()->create([
+            'nombre' => 'RRHH Cali',
+            'estatus' => 1,
+        ]);
         
+        Roles::factory()->create([
+            'nombre' => 'RRHH Satelite',
+            'estatus' => 1,
+        ]);
+
+        Roles::factory()->create([
+            'nombre' => 'Modelo',
+            'estatus' => 1,
+        ]);
     }
 }

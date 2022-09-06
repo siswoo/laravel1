@@ -28,10 +28,8 @@
                                 <td>{{$item->users_email}}</td>
                                 <td>{{$item->users_telefono}}</td>
                                 @if ($item->modelos_estatus==1)
-                                    <td>Proceso</td>
-                                @elseif ($item->modelos_estatus==2)
                                     <td>Activo</td>
-                                @else
+                                @elseif ($item->modelos_estatus==2)
                                     <td>Inactivo</td>
                                 @endif
                                 <td>{{$item->modelos_created_at}}</td>

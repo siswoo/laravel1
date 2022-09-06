@@ -64,4 +64,66 @@ class ModelosController extends Controller
         $modelos = Modelos::select('modelos.id as modelos_id','modelos.estatus as modelos_estatus','modelos.sede as modelos_sede','modelos.created_at as modelos_created_at','users.id as users_id','users.nombre as users_nombre','users.apellido as users_apellido','users.documento_tipo as users_documento_tipo','users.documento_numero as users_documento_numero','users.email as users_email','users.telefono as users_telefono')->where('sede','=',$sede)->join('users','modelos.id_users','=','users.id')->orderBy('modelos.id','DESC')->paginate(10);
         return view('modelos.index',compact('usuarios','proceso1','contador1','html1','sede','modelos'));
     }
+
+    function show($sede,$id){
+        $array = $this->getData();
+        $usuarios = $array[0];
+        $proceso1 = $array[1];
+        $contador1 = $array[2];
+        $html1 = $array[3];
+        $modelo = Modelos::select('modelos.id as modelos_id','modelos.estatus as modelos_estatus','modelos.sede as modelos_sede','modelos.created_at as modelos_created_at','users.id as users_id','users.nombre as users_nombre','users.apellido as users_apellido','users.documento_tipo as users_documento_tipo','users.documento_numero as users_documento_numero','users.email as users_email','users.telefono as users_telefono')->join('users','users.id','=','modelos.id_users')->where('modelos.id_users','=',$id)->where('modelos.sede','=',$sede)->orderBy('modelos.id','DESC')->first();
+        if(!isset($modelo->pasantes_id)){
+            $id_final = 0;
+        }else{
+            $id_final = $modelo->pasantes_id;
+        }
+        return view('modelos.show',compact('usuarios','proceso1','contador1','html1','modelo','id_final'));
+    }
+
+    function update(Request $request){
+        $validar1 = User::where('id','!=',$request->id)->where('documento_numero','=',$request->documento_numero)->get();
+        $validar2 = User::where('id','!=',$request->id)->where('email','=',$request->email)->get();
+        $contador1 = count($validar1);
+        $contador2 = count($validar2);
+        if($contador1>=1){
+            return response()->json(['estatus' => 'error','msg' => 'Ya hay otro usuario con dicho numero de documento'],200);
+        }
+        if($contador2>=1){
+            return response()->json(['estatus' => 'error','msg' => 'Ya hay otro usuario con dicho Correo'],200);
+        }
+        $usuario = User::find($request->id);
+        $usuario->nombre = $request->nombre;
+        $usuario->apellido = $request->apellido;
+        $usuario->documento_tipo = $request->documento_tipo;
+        $usuario->documento_numero = $request->documento_numero;
+        $usuario->telefono = $request->telefono;
+        $usuario->email = $request->email;
+        $usuario->password = $request->documento_numero;
+        $usuario->save();
+        return response()->json(['estatus' => 'ok','msg' => 'Se ha modificado satisfactoriamente'],200);
+    }
+
+    function personal(Request $request){
+        dd("En mantenimiento");
+        $validar1 = User::where('id','!=',$request->id)->where('documento_numero','=',$request->documento_numero)->get();
+        $validar2 = User::where('id','!=',$request->id)->where('email','=',$request->email)->get();
+        $contador1 = count($validar1);
+        $contador2 = count($validar2);
+        if($contador1>=1){
+            return response()->json(['estatus' => 'error','msg' => 'Ya hay otro usuario con dicho numero de documento'],200);
+        }
+        if($contador2>=1){
+            return response()->json(['estatus' => 'error','msg' => 'Ya hay otro usuario con dicho Correo'],200);
+        }
+        $usuario = User::find($request->id);
+        $usuario->nombre = $request->nombre;
+        $usuario->apellido = $request->apellido;
+        $usuario->documento_tipo = $request->documento_tipo;
+        $usuario->documento_numero = $request->documento_numero;
+        $usuario->telefono = $request->telefono;
+        $usuario->email = $request->email;
+        $usuario->password = $request->documento_numero;
+        $usuario->save();
+        return response()->json(['estatus' => 'ok','msg' => 'Se ha modificado satisfactoriamente'],200);
+    }
 }

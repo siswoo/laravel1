@@ -10,6 +10,7 @@ use App\Http\Controllers\ModelosController;
 use App\Http\Controllers\ModulosController;
 use App\Http\Controllers\PasantesController;
 use App\Http\Controllers\PasantiasController;
+use App\Http\Controllers\PruebasController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\SedesController;
@@ -95,6 +96,18 @@ Route::group(['middleware' => 'CheckToken'], function () {
     Route::post('pasantes/rechazar1',[PasantesController::class,'rechazar1'])->name('pasantes.rechazar1');
 
     Route::get('modelos/indexVip',[ModelosController::class,'indexVip'])->name('modelosVip.index');
+    Route::get('modelos/{sede}/{id}',[ModelosController::class,'show'])->name('modelos.show');
+    Route::put('modelos',[ModelosController::class,'update'])->name('modelos.update');
+    Route::get('modelos/personal',[ModelosController::class,'personal'])->name('modelosPersonal.index');
+    Route::get('modelos/bancarios',[ModelosController::class,'bancarios'])->name('modelosBancarios.index');
+    Route::get('modelos/corporales',[ModelosController::class,'corporales'])->name('modelosCorporales.index');
+    Route::get('modelos/documentos',[ModelosController::class,'documentos'])->name('modelosDocumentos.index');
+    Route::get('modelos/contrato',[ModelosController::class,'contrato'])->name('modelosContrato.index');
+    Route::get('modelos/cuentas',[ModelosController::class,'cuentas'])->name('modelosCuentas.index');
+    Route::get('modelos/fotos',[ModelosController::class,'fotos'])->name('modelosFotos.index');
+    Route::get('modelos/pagos',[ModelosController::class,'pagos'])->name('modelosPagos.index');
 });
 
 Route::get('roles_admin',[RolesController::class,'index'])->name('roles.index')->middleware('CheckToken', 'CheckRoles');
+
+Route::get('pruebas1',[PruebasController::class,'pruebas1'])->name('pruebas.index');

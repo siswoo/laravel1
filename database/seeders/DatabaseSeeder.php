@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ModulosSeeders::class);
         $this->call(UsersRolesSeeder::class);
         $this->call(SedesSeeder::class);
+        $this->call(PasanteSeeders::class);
+        $this->call(ModelosSeeders::class);
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

@@ -146,6 +146,15 @@ class PasantesController extends Controller
                 ]);
                 $item->estatus = 2;
                 $item->save();
+                
+                $validar1 = UsersRoles::where('id_users','=',$item->id_users)->where('id_roles','=',19)->get();
+                $contador_validar1 = count($validar1);
+                if($contador_validar1==0){
+                    $users_roles = UsersRoles::create([
+                        'id_users' => $item->id_users,
+                        'id_roles' => 19,
+                    ]);
+                }
             }
             return response()->json(['estatus' => 'ok','msg' => 'Se ha cambiado satisfactoriamente'],200);
         }
