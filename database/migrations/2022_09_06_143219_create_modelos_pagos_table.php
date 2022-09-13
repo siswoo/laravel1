@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('modelos_pagos', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_users');
+            $table->integer('id_modelos');
             $table->integer('id_presabanas_modelos');
             $table->string('id_users_responsable');
             $table->timestamps();

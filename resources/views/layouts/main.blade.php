@@ -17,6 +17,7 @@
             <h1 class="text-titles">Sistema <small>Versión 2</small></h1>
             </div>
         </div>
+        
 
             @yield('content')
 

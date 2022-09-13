@@ -44,7 +44,9 @@
                                 </td>
                                 <td class="text-center">
                                     @if ($item->modelos_estatus==1)
-                                        <button type="button" class="btn btn-primary" onclick="documentos1({{$item->modelos_id}});">Ver Documentos</button>
+                                        <a href="../modelos/documentos/{{$item->modelos_sede}}/{{$item->modelos_id}}" target="_blank">
+                                            <button type="button" class="btn btn-primary" onclick="documentos1({{$item->modelos_id}});">Ver Documentos</button>
+                                        </a>
                                     @endif
                                 </td>
                             </tr>
@@ -75,6 +77,10 @@
                     window.location = "{{route('logout.logout')}}";
                 }
             });
+        }
+
+        function documentos1(id){
+            //
         }
 
     </script>

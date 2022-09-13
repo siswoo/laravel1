@@ -24,6 +24,7 @@ class UserSeeders extends Seeder
             'password' => '2421187',
             'email' => 'juanmaldonado.co@gmail.com',
             'genero' => 'Masculino',
+            'codigo_telefono' => '57',
             'telefono' => '3016984868',
             'estatus' => 1,
         ]);

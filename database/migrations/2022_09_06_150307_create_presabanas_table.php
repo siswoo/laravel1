@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('presabanas', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_users');
+            $table->integer('id_modelos');
             $table->integer('sedes');
             $table->date('inicio');
             $table->date('fin');

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('modelos_fotos', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_users');
+            $table->integer('id_modelos');
             $table->integer('id_fotos');
             $table->string('documento_nombre');
             $table->string('documento_formato');

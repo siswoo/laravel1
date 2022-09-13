@@ -34,6 +34,7 @@ class UserFactory extends Factory
             'avatar' => $this->faker->imageUrl($width = 640, $height = 480),
             'genero' => $this->faker->randomElement(['Masculino','Femenino','Transexual']),
             'estatus' => 1,
+            'codigo_telefono' => '57',
             'telefono' => '3016984868',
             'email_verified_at' => now(),
             'remember_token' => Str::random(10),

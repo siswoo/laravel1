@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('modelos_corporales', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_users');
+            $table->integer('id_modelos');
             $table->string('altura');
             $table->string('peso');
             $table->string('pene')->nullable();

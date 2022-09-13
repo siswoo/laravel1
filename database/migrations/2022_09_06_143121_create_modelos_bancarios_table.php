@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('modelos_bancarios', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_users');
+            $table->integer('id_modelos');
             $table->string('cpp');
             $table->string('documento_tipo');
             $table->string('documento_numero');

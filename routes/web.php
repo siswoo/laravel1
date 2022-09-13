@@ -106,6 +106,7 @@ Route::group(['middleware' => 'CheckToken'], function () {
     Route::get('modelos/cuentas',[ModelosController::class,'cuentas'])->name('modelosCuentas.index');
     Route::get('modelos/fotos',[ModelosController::class,'fotos'])->name('modelosFotos.index');
     Route::get('modelos/pagos',[ModelosController::class,'pagos'])->name('modelosPagos.index');
+    Route::get('modelos/documentos/{sede}/{id}',[ModelosController::class,'documentos_index'])->name('modelos.documentos');
 });
 
 Route::get('roles_admin',[RolesController::class,'index'])->name('roles.index')->middleware('CheckToken', 'CheckRoles');

@@ -4,7 +4,7 @@
     <form action="#" id="formulario1" method="POST">
         @csrf
         <div class="row" style="padding: 30px 50px;">
-            <div class="col-12 text-center" style="font-weight: bold; font-size: 20px; text-transform:uppercase;margin-bottom:1rem;">Creacion de un Nuevo Pasante</div>
+            <div class="col-12 text-center" style="font-weight: bold; font-size: 20px; text-transform:uppercase;margin-bottom:1rem;">Creación de un Nuevo Pasante</div>
             <div class="col-12" style="margin-top: 1rem;">
                 <label for="documento_tipo">Tipo de Documento</label>
                 <select name="documento_tipo" id="documento_tipo" class="form-control" required value="{{old('documento_tipo')}}">
@@ -34,6 +34,20 @@
             <div class="col-12" style="margin-top: 1rem;">
                 <label for="email2">Repetir Correo</label>
                 <input type="email" class="form-control" name="email2" id="email2" required autocomplete="off">
+            </div>
+            <div class="col-12" style="margin-top: 1rem;">
+                <label for="codigo_telefono">Código de teléfono</label>
+                <select name="codigo_telefono" id="codigo_telefono" class="form-control" required>
+                    <option value="57">Colombia (+57)</option>
+                    <option value="54">Argentina (+54)</option>
+                    <option value="591">Bolivia (+591)</option>
+                    <option value="55">Brasil (+55)</option>
+                    <option value="593">Ecuador (+593)</option>
+                    <option value="595">Paraguay (+595)</option>
+                    <option value="51">Perú (+51)</option>
+                    <option value="598">Uruguay (+598)</option>
+                    <option value="58">Venezuela (+58)</option>
+                </select>
             </div>
             <div class="col-12" style="margin-top: 1rem;">
                 <label for="telefono">Número de Teléfono</label>
@@ -101,6 +115,7 @@
             var apellido = $('#apellido').val();
             var email = $('#email').val();
             var email2 = $('#email2').val();
+            var codigo_telefono = $('#codigo_telefono').val();
             var telefono = $('#telefono').val();
             var barrio = $('#barrio').val();
             var direccion = $('#direccion').val();
@@ -129,6 +144,7 @@
                     'documento_tipo': documento_tipo,
                     'documento_numero': documento_numero,
                     'email': email,
+                    'codigo_telefono': codigo_telefono,
                     'telefono': telefono,
                     'barrio': barrio,
                     'direccion': direccion,
