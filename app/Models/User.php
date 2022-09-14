@@ -31,6 +31,7 @@ class User extends Authenticatable
         'genero',
         'barrio',
         'enterado',
+        'primer_login',
     ];
 
     /**

@@ -45,6 +45,7 @@ Route::group(['middleware' => 'CheckToken'], function () {
     Route::get('usuarios', [UserController::class,'listado']);
     Route::get('logout',[LogoutController::class,'logout'])->name('logout.logout');
     Route::get('lobby',[LobbyController::class,'index'])->name('lobby.index');
+    Route::put('lobby/primer_login',[LobbyController::class,'primer_login'])->name('lobby.primer_login');
     
     Route::get('usuarios_admin', [UserController::class,'index'])->name('usuarios.index');
     Route::get('usuarios_create', [UserController::class,'create'])->name('usuarios.create');

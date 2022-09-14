@@ -59,6 +59,19 @@ class LobbyController extends Controller
         $proceso1 = $array[1];
         $contador1 = $array[2];
         $html1 = $array[3];
-        return view('lobby.index',compact('usuarios','proceso1','contador1','html1'));
+
+        if($usuarios->primer_login==1){
+            return view('layouts.main2',compact('usuarios','proceso1','contador1','html1'));
+        }else{
+            return view('lobby.index',compact('usuarios','proceso1','contador1','html1'));
+        }
+    }
+
+    public function primer_login(Request $request){
+        $usuario = User::find($request->id);
+        $usuario->primer_login = 0;
+        $usuario->password = $request->password;
+        $usuario->save();
+        return response()->json(['estatus' => 'ok','msg' => 'Se ha modificado satisfactoriamente'],200);
     }
 }

@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('genero')->nullable();
             $table->string('barrio')->nullable();
             $table->string('enterado')->nullable();
+            $table->integer('primer_login')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });
