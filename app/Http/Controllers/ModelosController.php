@@ -141,6 +141,18 @@ class ModelosController extends Controller
         return view('modelos.bancarios',compact('usuarios','proceso1','contador1','html1','modelobancarios','id_modelo'));
     }
 
+    function bancarios_update(){
+        $id = Auth::user()->id;
+        $modelo = Modelos::where('id_users','=',$id)->first();
+        if(!isset($modelo->id)){
+            dd("Error, no tiene permisos");
+        }
+
+        $modelobancarios = ModelosBancarios::where('id_modelos','=',$modelo->id)->first();
+        $id_modelo = $modelo->id;
+        return view('modelos.bancarios',compact('usuarios','proceso1','contador1','html1','modelobancarios','id_modelo'));
+    }
+
     function documentos_index($sede,$id){
         $array = $this->getData();
         $usuarios = $array[0];

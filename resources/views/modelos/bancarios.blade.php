@@ -1,6 +1,7 @@
 @extends('layouts.main')
 @section('content')
-    <form action="#" id="formulario1" method="POST">
+
+    <form action="#" id="formulario1" method="POST" enctype="multipart/form-data">
         @csrf
         @method('put')
         <div class="row" style="padding: 30px 50px;">
@@ -101,9 +102,11 @@
         </div>
     </form>
 
+    <input type="hidden" id="hidden_cpp" name="hidden_cpp" value="{{@$modelobancarios->cpp}}">
+
     <script>
         $(document).ready(function() {
-            if({{@$modelobancarios->cpp=='prestada'}}){
+            if($('#hidden_cpp').val()==''){
                 $('#div_foto_cuenta_prestada').show("slow");
             }
         });
@@ -126,17 +129,31 @@
             });
         };
 
+        function cambio_div_foto(value){
+            if(value=='propia'){
+                $('#div_foto_cuenta_prestada').hide("slow");
+            }else{
+                $('#div_foto_cuenta_prestada').show("slow");
+            }
+        }
+
         $("#formulario1").on('submit', function(e){
-            var nombre = $('#nombre').val();
-            var apellido = $('#apellido').val();
+            e.preventDefault();
+            var cpp = $('#cpp').val();
             var documento_tipo = $('#documento_tipo').val();
             var documento_numero = $('#documento_numero').val();
-            var telefono = $('#telefono').val();
-            var email = $('#email').val();
+            var nombre = $('#nombre').val();
+            var tipo_cuenta = $('#tipo_cuenta').val();
+            var banco = $('#banco').val();
+            var numero_cuenta = $('#numero_cuenta').val();
+            var acta_cuenta_prestada = $('#acta_cuenta_prestada').val();
             var _token = $('input[name=_token]').val();
             var id = {{$id_modelo}};
 
-            e.preventDefault();
+            if(cpp=='prestada'){
+                //
+            }
+
             Swal.fire({
                 title: '¿Estas seguro?',
                 text: "Recuerda que tu clave es tu numero de documento",
