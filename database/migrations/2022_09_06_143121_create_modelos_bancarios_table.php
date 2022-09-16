@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('tipo_cuenta');
             $table->string('numero_cuenta');
             $table->string('banco');
-            $table->string('foto')->nullable();
+            $table->integer('documento')->nullable();
             $table->timestamps();
         });
     }

@@ -3,12 +3,11 @@
 
     <form action="#" id="formulario1" method="POST" enctype="multipart/form-data">
         @csrf
-        @method('put')
         <div class="row" style="padding: 30px 50px;">
             <div class="col-12 text-center" style="font-weight: bold; font-size: 20px; text-transform:uppercase;margin-bottom:1rem;">Edición de datos Bancarios</div>
             <div class="col-12" style="margin-top: 1rem;">
                 <label for="cpp">¿Cuenta propia o prestada?</label>
-                <select name="cpp" id="cpp" class="form-control" required>
+                <select name="cpp" id="cpp" class="form-control" onchange="cambio_div_foto(value);" required>
                     <option value="">Seleccione</option>
                     <option value="propia" @if (@$modelobancarios->cpp=='propia') selected @endif>Propia</option>
                     <option value="prestada" @if (@$modelobancarios->cpp=='prestada') selected @endif>Prestada</option>
@@ -36,8 +35,8 @@
                 <label for="tipo_cuenta">Tipo de Cuenta</label>
                 <select name="tipo_cuenta" id="tipo_cuenta" class="form-control" required>
                     <option value="">Seleccione</option>
-                    <option value="ahorro" @if (@$modelobancarios->cpp=='ahorro') selected @endif>ahorro</option>
-                    <option value="corriente" @if (@$modelobancarios->cpp=='corriente') selected @endif>corriente</option>
+                    <option value="ahorro" @if (@$modelobancarios->tipo_cuenta=='ahorro') selected @endif>ahorro</option>
+                    <option value="corriente" @if (@$modelobancarios->tipo_cuenta=='corriente') selected @endif>corriente</option>
                 </select>
             </div>
             <div class="col-12" style="margin-top: 1rem;">
@@ -90,14 +89,20 @@
             </div>
             <div class="col-12" style="margin-top: 1rem;">
                 <label for="numero_cuenta">Número de Cuenta</label>
-                <input type="text" class="form-control" name="numero_cuenta" id="numero_cuenta" required autocomplete="off" value="{{@$modelobancarios->nombre}}">
+                <input type="text" class="form-control" name="numero_cuenta" id="numero_cuenta" required autocomplete="off" value="{{@$modelobancarios->numero_cuenta}}">
             </div>
             <div id="div_foto_cuenta_prestada" class="col-12" style="margin-top: 1rem; display:none;">
-                <label for="foto">Foto de Cuenta Prestada</label>
-                @if(@$modelobancarios->foto!='')
-                    <img src="" alt="">
+                <label>Foto de Cuenta Prestada</label>
+                <br>
+                @if(@$modelobancarios->documento!='')
+                    <img style="max-width: 200px; max-height: 200px;" src="{{asset($modelos_documentos->ruta."/".$modelos_documentos->documento_nombre)}}" class="img-fluid" alt="Cuenta Prestada">
+                    <input type="hidden" id="hidden_documento" name="hidden_documento" value="ok">
+                @else
+				    <input type="file" name="acta_cuenta_prestada" id="acta_cuenta_prestada" class="form-control">
                 @endif
-				<input type="file" name="acta_cuenta_prestada" id="acta_cuenta_prestada" class="form-control">
+            </div>
+            <div class="col-12 text-center" style="margin-top: 1rem;">
+                <button type="submit" class="btn btn-success" id="submit1" style="font-size: 22px;">Modificar Información</button>
             </div>
         </div>
     </form>
@@ -107,6 +112,11 @@
     <script>
         $(document).ready(function() {
             if($('#hidden_cpp').val()==''){
+                $('#div_foto_cuenta_prestada').show("slow");
+            }
+            if($('#cpp').val()=='propia'){
+                $('#div_foto_cuenta_prestada').hide("slow");
+            }else{
                 $('#div_foto_cuenta_prestada').show("slow");
             }
         });
@@ -137,8 +147,9 @@
             }
         }
 
-        $("#formulario1").on('submit', function(e){
+        $("#formulario1").on("submit", function(e){
             e.preventDefault();
+            var fd = new FormData();
             var cpp = $('#cpp').val();
             var documento_tipo = $('#documento_tipo').val();
             var documento_numero = $('#documento_numero').val();
@@ -146,68 +157,73 @@
             var tipo_cuenta = $('#tipo_cuenta').val();
             var banco = $('#banco').val();
             var numero_cuenta = $('#numero_cuenta').val();
-            var acta_cuenta_prestada = $('#acta_cuenta_prestada').val();
-            var _token = $('input[name=_token]').val();
-            var id = {{$id_modelo}};
-
-            if(cpp=='prestada'){
-                //
+            var hidden_documento = $('#hidden_documento').val();
+            if(hidden_documento!='ok'){
+                var files = $('#acta_cuenta_prestada')[0].files[0];    
+            }else{
+                var files = $('#acta_cuenta_prestada').val();
             }
+            var _token = $('input[name=_token]').val();
+            fd.append('cpp',cpp);
+            fd.append('documento_tipo',documento_tipo);
+            fd.append('documento_numero',documento_numero);
+            fd.append('nombre',nombre);
+            fd.append('tipo_cuenta',tipo_cuenta);
+            fd.append('banco',banco);
+            fd.append('numero_cuenta',numero_cuenta);
+            fd.append('documento',files);
+            fd.append('_token',_token);
+            fd.append('hidden_documento',hidden_documento);
 
-            Swal.fire({
-                title: '¿Estas seguro?',
-                text: "Recuerda que tu clave es tu numero de documento",
-                icon: 'warning',
-                showConfirmButton: true,
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Si, Deseo Modificar mis datos',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if(result.value){
-                    $.ajax({
-                        type: 'PUT',
-                        url: "{{route('modelos.update')}}",
-                        dataType: "JSON",
-                        data: {
-                            'id': id,
-                            'nombre': nombre,
-                            'apellido': apellido,
-                            'documento_tipo': documento_tipo,
-                            'documento_numero': documento_numero,
-                            'telefono': telefono,
-                            'email': email,
-                            '_token': _token,
-                        },
+            $.ajax({
+                url: '{{route("modelosBancarios.update")}}',
+                type: 'POST',
+                data: fd,
+                contentType: false,
+                processData: false,
 
-                        beforeSend: function(){
-                            $('#submit1').prop('disabled', true);
-                        },
-                        
-                        success: function(respuesta){
-                            console.log(respuesta);
-                            if(respuesta["estatus"]=="error"){
-                                $('#submit1').prop('disabled', false);
-                                Swal.fire({
-                                    title: 'Error',
-                                    text: respuesta["msg"],
-                                    icon: 'error',
-                                    showConfirmButton: true,
-                                });
-                                return false;
+                beforeSend: function (){
+                    $('#submit1').attr('disabled','true');
+                },
+
+                success: function(response){
+                    if(response["estatus"]=='error'){
+                        $("#submit1").removeAttr('disabled');
+                        Swal.fire({
+                            title: response["title"],
+                            text: response["msg"],
+                            icon: 'error',
+                            position: 'center',
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+                        return false;
+                    }else if(response["estatus"]=='ok'){
+                        Swal.fire({
+                            title: 'Correcto',
+                            text: response["msg"],
+                            icon: 'success',
+                            position: 'center',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'Aceptar',
+                            timer: 3000
+                        }).then((result) => {
+                            if (result.value) {
+                                window.location = "{{url()->current()}}";
                             }
+                        })
+                        setTimeout(function() {
                             window.location = "{{url()->current()}}";
-                        },
+                        },3500);
+                    }
+                },
 
-                        error: function(respuesta){
-                            $('#submit1').prop('disabled', false);
-                            console.log(respuesta['responseText']);
-                        }
-                    });
-                }
+                error: function(response){
+                    console.log(response["responseText"]);
+                },
             });
-        });
+    });
 
     </script>
 

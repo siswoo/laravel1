@@ -101,6 +101,7 @@ Route::group(['middleware' => 'CheckToken'], function () {
     Route::put('modelos',[ModelosController::class,'update'])->name('modelos.update');
     Route::get('modelos/personal',[ModelosController::class,'personal'])->name('modelosPersonal.index');
     Route::get('modelos/bancarios',[ModelosController::class,'bancarios'])->name('modelosBancarios.index');
+    Route::post('modelos/bancarios',[ModelosController::class,'bancarios_update'])->name('modelosBancarios.update');
     Route::get('modelos/corporales',[ModelosController::class,'corporales'])->name('modelosCorporales.index');
     Route::get('modelos/documentos',[ModelosController::class,'documentos'])->name('modelosDocumentos.index');
     Route::get('modelos/contrato',[ModelosController::class,'contrato'])->name('modelosContrato.index');

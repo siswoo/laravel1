@@ -137,20 +137,94 @@ class ModelosController extends Controller
         }
 
         $modelobancarios = ModelosBancarios::where('id_modelos','=',$modelo->id)->first();
+        $modelos_documentos = ModelosDocumentos::where('id_modelos','=',$modelo->id)->where('id_documentos','=',7)->first();
         $id_modelo = $modelo->id;
-        return view('modelos.bancarios',compact('usuarios','proceso1','contador1','html1','modelobancarios','id_modelo'));
+        return view('modelos.bancarios',compact('usuarios','proceso1','contador1','html1','modelobancarios','id_modelo','modelos_documentos'));
     }
 
-    function bancarios_update(){
+    function bancarios_update(Request $request){
         $id = Auth::user()->id;
         $modelo = Modelos::where('id_users','=',$id)->first();
         if(!isset($modelo->id)){
             dd("Error, no tiene permisos");
         }
 
-        $modelobancarios = ModelosBancarios::where('id_modelos','=',$modelo->id)->first();
-        $id_modelo = $modelo->id;
-        return view('modelos.bancarios',compact('usuarios','proceso1','contador1','html1','modelobancarios','id_modelo'));
+        $modelos_bancarios = ModelosBancarios::where('id_modelos','=',$modelo->id);
+        $modelos_documentos = ModelosDocumentos::where('id_modelos','=',$modelo->id)->where('id_documentos','=',7)->first();
+
+        if($request->cpp=='propia'){
+            $modelos_bancarios->delete();
+            if($request->hidden_documento=='ok'){
+                $modelos_documentos->delete();
+            }
+            $modelos_bancarios = ModelosBancarios::create([
+                'id_modelos' => $modelo->id,
+                'cpp' => $request->cpp,
+                'documento_tipo' => $request->documento_tipo,
+                'documento_numero' => $request->documento_numero,
+                'nombre' => $request->nombre,
+                'tipo_cuenta' => $request->tipo_cuenta,
+                'numero_cuenta' => $request->numero_cuenta,
+                'banco' => $request->banco,
+            ]);
+            $modelos_bancarios->save();
+            return response()->json(['estatus' => 'ok','msg' => "Se ha modificado exitosamente"],200);
+        }
+
+        if($request->cpp=='prestada'){
+            if($request->hidden_documento=='undefined' and $request->documento=='undefined'){
+                return response()->json(['estatus' => 'error','title' => 'No ha subido Foto','msg' => "por favor suba una foto de cuenta prestada"],200);
+            }
+            if($request->hidden_documento=='undefined' and $request->documento!='undefined'){
+                $documento = $request->file('documento');
+                $extension = strtolower($documento->getClientOriginalExtension());
+                if($extension!='jpeg' and $extension!='jpg' and $extension!='png'){
+                    return response()->json(['estatus' => 'error','title' => "Formato Invalido",'msg' => "Solo acepta jpeg,jpg,png"],200);
+                }
+                $filename = rand(10000,999999).".".$extension;
+                $ruta = public_path('documentos/users/'.$id);
+                $ruta2 = 'documentos/users/'.$id;
+                $documento->move($ruta,$filename);
+                $modelos_bancarios->delete();
+                $modelos_documentos = ModelosDocumentos::create([
+                    'id_modelos' => $modelo->id,
+                    'id_documentos' => 7,
+                    'documento_nombre' => $filename,
+                    'documento_formato' => $extension,
+                    'ruta' => $ruta2,
+                ]);
+                $modelos_documentos->save();
+                $modelos_bancarios = ModelosBancarios::create([
+                    'id_modelos' => $modelo->id,
+                    'cpp' => $request->cpp,
+                    'documento_tipo' => $request->documento_tipo,
+                    'documento_numero' => $request->documento_numero,
+                    'nombre' => $request->nombre,
+                    'tipo_cuenta' => $request->tipo_cuenta,
+                    'numero_cuenta' => $request->numero_cuenta,
+                    'banco' => $request->banco,
+                    'documento' => $modelos_documentos->id,
+                ]);
+                $modelos_bancarios->save();
+                return response()->json(['estatus' => 'ok','msg' => "Se ha modificado exitosamente"],200);
+            }
+            if($request->hidden_documento=='ok'){
+                $modelos_bancarios->delete();
+                $modelos_bancarios = ModelosBancarios::create([
+                    'id_modelos' => $modelo->id,
+                    'cpp' => $request->cpp,
+                    'documento_tipo' => $request->documento_tipo,
+                    'documento_numero' => $request->documento_numero,
+                    'nombre' => $request->nombre,
+                    'tipo_cuenta' => $request->tipo_cuenta,
+                    'numero_cuenta' => $request->numero_cuenta,
+                    'banco' => $request->banco,
+                    'documento' => $modelos_documentos->id,
+                ]);
+                $modelos_bancarios->save();
+                return response()->json(['estatus' => 'ok','msg' => "Se ha modificado exitosamente"],200);
+            }
+        }
     }
 
     function documentos_index($sede,$id){
